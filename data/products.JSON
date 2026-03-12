@@ -1,0 +1,14 @@
+[
+    {"id":1, "name":"NWHR In Particular Hoodie", "price":85, "section":"streetwear", "brand":["NWHR"], "img":"particular-hoodie.png"},
+    {"id":2, "name":"NWHR Apacheta Hoodie", "price":82, "section":"streetwear", "brand":["NWHR"],"img":"apacheta-hoodie.png"},
+    {"id":3, "name":"NWHR Bomb Tee", "price":49, "section":"streetwear", "brand":["NWHR"],"img":"bomb-tee.png"},
+    {"id":4, "name":"NWHR Spray White Tee", "price":49, "section":"streetwear", "brand":["NWHR"], "img":"spray-tee.png"},
+    {"id":5, "name":"Corteiz Trucker Hat Black White", "price":95, "section":"accesorios", "brand":["Corteiz"], "img":"corteiz-hat.png"},
+    {"id":6, "name":"Louis Vuitton Ankle Boot Timberland Wheat", "price":4500, "section":"sneakers", "brand":["Louis Vuitton", "Timberland"], "img":"LV-Boot.png"},
+    {"id":7, "name":"New Era 9FORTY LA Green", "price":32, "section":"new era", "brand":["New Era"], "img":"ne-la-green.png"},
+    {"id":8, "name":"New Era 9FORTY NY Green Cream", "price":32, "section":"new era", "brand":["New Era"], "img":"ne-ny-greenCream.png"},
+    {"id":9, "name":"New Era 9FORTY NY Flowers", "price":32, "section":"new era", "brand":["New Era"], "img":"ne-ny-flowers.png"},
+    {"id":10 , "name":"New Era 9TWENTY NY", "price":32, "section":"new era", "brand":["New Era"], "img":"ne-ny-classic.png"},
+    {"id":11 , "name":"SB Dunk Low RIOT", "price":320, "section":"sneakers", "brand":["Nike"], "img":"dunk-riot.png"},
+    {"id":12 , "name":"Air Max 95 Corteiz Honey Black", "price":390, "section":"sneakers", "brand":["Nike", "Corteiz"], "img":"95-corteiz-honeyBlack.png"}
+]

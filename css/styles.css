@@ -1,0 +1,488 @@
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css);
+@font-face {
+    font-family: "Inter";
+    src: url(../fonts/Inter/Inter-VariableFont_opsz\,wght.ttf);
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a{
+    text-decoration: none;
+    color: #000000;
+}
+/*Definición de variables*/
+:root{
+    --borde: #cdcdcd;
+    --radioBorde: 7px;
+}
+
+/*Esilos generales*/
+.centrado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fondoBlur{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    height: 100vh;
+    img{
+        height: 100%;
+        width: 100%;
+    }
+    .blur{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        background-color: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px); /*Efecto blur del contenedor transparente*/
+        width: 59%;
+        padding: 2% 3%;
+        border-radius: 20px;
+
+        color: #ffffff;
+        font-family: Inter;
+        text-align: center;
+
+        h1{
+            font-size: 3rem;
+            margin-bottom: 3%;
+        }
+        h2{
+            font-size: 1.25rem;
+            color: #ff6b35;
+            margin-bottom: 3%;
+        }
+        p{
+            font-size: 13px;
+            text-align: justify;
+            line-height: 150%;
+            margin-bottom: 20px;
+        }
+        div{
+            display: flex;
+            gap: 10px;
+            .btnNaranja{
+                background-color: #ff6b35;
+                border: none;
+
+                transition: 0.25s;
+                &:hover{
+                    border: none;
+                    background-color: #ff6b35;
+                    box-shadow: 0px 5px 25px 0px rgba(255,107,53,0.43);
+                }
+            }
+            button{
+                color: #ffffff;
+                font-size: 10px;
+                font-weight:bold;
+
+                background-color: rgba(0, 0, 0, 0);
+                border: 2.5px solid #909090;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+
+                transition: 0.25s;
+                &:hover{
+                    border: 2.5px solid #d2d2d2;
+                    background-color: rgba(187, 187, 187, 0.1);
+                    transform: translateY(-2px); 
+                }
+            }
+        }
+    }
+}
+
+.slidesBtns{
+    display: flex;
+    gap: 10px;
+
+    position: absolute;
+    bottom: 5%;
+    
+    width: 60px;
+    input{
+        appearance: none; /*Quitar el estilo nativo*/
+        width: 12px;
+        height: 12px;
+        border-radius: 50px;
+        background-color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        
+        transition: 0.25s;
+        &:checked {
+            background-color: #ffffff;
+            width: 40px;
+            border-radius: 30px;
+        }
+    }
+}
+
+.sectionProductos{
+    font-family: Inter;
+    padding: 2% 4%;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 5%;
+    width: 100%;
+    h1{
+        font-size: 36px;
+    }
+    .drch{
+        right: 2%;
+    }
+    .izq{
+        left: 2%;
+    }
+    button{
+        position: absolute;
+        z-index: 15;
+        top: 45%;
+
+        border-radius: 50%;
+        border: none;
+        padding: 1% 1.30%;
+        background-color: #ffffff;
+        box-shadow: 0px 0px 7px -4px #000000;
+        cursor: pointer;
+        
+        font-size: 18px;
+        transition: 0.25s;
+        &:hover{
+            background-color: #000000;
+            color: #ffffff;
+        }
+    }
+    .productos{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5%;
+        transition: 0.25s;
+        margin-top: 40px;
+        
+        article{
+            flex-basis: 22%;
+            img{
+                object-fit: contain;
+            }
+            &:hover img{ /*Para efecto sobre articulo y no solo sobre imagen*/
+                transform: scale(1.075);
+            }
+            &:hover .contenidoProd{
+                padding-top: 15px;
+            }
+            .contenedorOverflow{
+                height: 50vh;
+            }
+            .contenidoProd{
+                height: 15vh;
+                margin-left: 10px;
+                padding-top: 20px;
+                font-size: 15px;
+                line-height: 25px;
+                transition: 0.5s;
+            }
+        }
+    }
+    
+}
+
+.contenedorOverflow{
+    /*Hay que definir dimensiones del contenedor cuando se use*/
+    overflow: hidden;
+    width: 100%;
+    img{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        transition: 0.5s;
+        &:hover{ 
+            transform: scale(1.075);
+        }
+    }
+}
+
+/*HEADER*/
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1% 2%;
+    /*Estilos comunes en los dos divs del header*/
+    div{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    /*Estilos concretos de cada elemento*/
+    img{
+        width: 3.5rem;
+    }   
+    input{
+        width: 25rem;
+        border: 1px solid var(--borde);
+        border-radius: 7px;
+        padding: 10px 15px;
+        &::placeholder{
+            font-size: 14px
+        }
+    }
+    select{
+        border: 1px solid var(--borde);
+        border-radius: var(--radioBorde);
+        padding: 5px;
+        width: 10rem;
+        font-size: 12px;
+        
+    }
+    i{ /*Estilo porque el "regular" de fontawesome es de pago*/
+        color: white;
+        -webkit-text-stroke: 1.5px black
+    }
+}
+
+/*NAV*/
+nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-basis: 97%;
+    background-color: black;
+    border-radius: var(--radioBorde);
+    margin-bottom: 15px;
+    
+    .elementoNav{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        transition: 0.25s;
+        position: relative;
+        a{
+            font-size: 15px;
+            font-family: Inter;
+            color: white;
+            padding: 18px;
+        }
+
+        &:hover{
+            background-color: #333333;   
+        }
+
+        .submenu{
+            position: absolute;
+            top: 100%;
+            z-index: 15;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            
+            width: 30rem;
+            padding: 30px;
+            background-color: #ffffff;
+            opacity: 0;
+            border-radius: 15px;
+
+            font-family: Inter;
+            letter-spacing: 1.1px;
+
+            transition: 0.25s;
+            transform: translateY(0);
+            visibility: hidden;
+
+            h4{
+                font-size: 13px;
+                margin-bottom: 20px;
+            }
+            a{
+                display: block;
+                padding: 5px 0;
+                margin-bottom: 10px;
+                width: fit-content;
+
+                font-size: 14px;
+                color: #707070;
+
+                transform: translateX(0);
+                transition: 0.25s;
+                &:hover{
+                    transform: translate(4px);
+                    color: #000000;
+                }
+            }
+        }
+        &:hover .submenu{
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(10px);
+        }
+    }
+}
+
+/*MAIN*/
+#intro.fondoBlur{
+    background: no-repeat center/cover;
+    transition: 1s;
+}
+.parte1Marcas{
+    display: flex;
+    width: 100%;
+    height: 95vh;
+    margin-bottom: 30px;
+    font-family: Inter;
+    letter-spacing: 2px;
+    
+    .contenedorOverflow{
+        height: 85vh;
+    }
+
+    .contenidoMarca{
+        margin: 5% 7%;
+        h3{
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        p{
+            font-size: 13px;
+            color: #909090;
+        }
+    }
+
+}
+
+.parte2Marcas{
+    display: flex;
+    
+    height: 129vh;
+    width: 100%;
+    .contenedorOverflow{
+        flex-basis: 50%;
+    }
+    .gorras{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        justify-content: space-between;
+
+        flex-basis: 50%;
+        height: 100%;
+        padding: 25px;
+
+        a{
+            margin-bottom: 5rem;
+        }
+        p{
+            font-family: Inter;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+        }
+        .precio{
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    }
+}
+
+#blog.fondoBlur{
+    background: url(../img/blur3.png) no-repeat center/cover;
+}
+
+/*FOOTER*/
+footer{
+    display: flex;
+    justify-content: space-around;
+
+    margin-top: 35px;
+    font-family: Inter;
+    div{
+        display: flex;
+        flex-direction: column;
+
+        flex-basis: 20%;
+        h3{
+            font-size: 23px;
+            margin-bottom: 20px;
+        }
+        p, a{
+            margin-bottom: 10px;
+            font-size: 15px;
+            line-height: 1.5rem;
+            color: #707070;
+        }
+        a{
+            width: fit-content;
+            text-decoration:underline;
+            text-underline-offset: 3px;
+            transition: 0.2s;
+            &:hover{
+                color: #000000;
+                text-decoration-thickness: 2px;
+            }
+        }
+    }
+}
+
+#final{
+    padding: 30px;
+    font-family: Inter;
+    font-size: 12px;
+    color: #707070;
+    text-align: center;
+}
+
+@media (max-width: 767px){  /*Ultimo*/
+    header{
+        padding: 3.5% 2%;
+        img{
+            width: 3rem;
+        }
+        /*Falta hacer menus "hamburguesa" con js*/
+    }
+
+    nav{
+        display: none;
+    }
+    .fondoBlur{
+        height: 50vh;
+
+        .blur{
+            width: 97%;
+            height: fit-content;
+            padding: 5%;
+            
+            h1{
+                font-size: 1.85rem;
+            }
+            h2{
+                font-size: 1rem;
+            }
+            p{
+                font-size: 15px;
+            }
+            div{
+                flex-direction: column;
+                gap: 5px;
+                button{
+                    font-size: 9px;
+                    padding: 8px 100px;
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
