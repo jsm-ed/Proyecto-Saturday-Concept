@@ -15,15 +15,15 @@ const renderProducts = (container, products) =>{
     container.innerHTML = ""
     products.forEach(product => {
         container.innerHTML+=`
-        <article>
-        <div class="contenedorOverflow">
-        <img src="./img/Productos/${product.img}"/>
-        </div>
-        <div class="contenidoProd">
-        <p>${product.name}</p>
-        <p class="precio">${product.price}€</p>
-        </div>
-        </article>
+            <article>
+                <div class="contenedorOverflow">
+                    <img src="./img/Productos/${product.img}"/>
+                </div>
+                <div class="contenidoProd">
+                    <p>${product.name}</p>
+                    <p class="precio">${product.price}€</p>
+                </div>
+            </article>
         `
     })
 }
