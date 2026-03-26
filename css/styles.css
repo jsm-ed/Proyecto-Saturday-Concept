@@ -340,7 +340,7 @@ nav{
 
 /*MAIN*/
 #intro.fondoBlur{
-    background: no-repeat center/cover;
+    background: url(../img/principal1.png) no-repeat center/cover;
     transition: 1s;
 }
 .parte1Marcas{
@@ -447,49 +447,6 @@ footer{
     color: #707070;
     text-align: center;
 }
-
-@media (max-width: 767px){  /*Ultimo*/
-    header{
-        padding: 3.5% 2%;
-        img{
-            width: 3rem;
-        }
-        /*Falta hacer menus "hamburguesa" con js*/
-    }
-
-    nav{
-        display: none;
-    }
-    .fondoBlur{
-        height: 50vh;
-
-        .blur{
-            width: 97%;
-            height: fit-content;
-            padding: 5%;
-            
-            h1{
-                font-size: 1.85rem;
-            }
-            h2{
-                font-size: 1rem;
-            }
-            p{
-                font-size: 15px;
-            }
-            div{
-                flex-direction: column;
-                gap: 5px;
-                button{
-                    font-size: 9px;
-                    padding: 8px 100px;
-                    margin: 0;
-                }
-            }
-        }
-    }
-}
-
 
 /*PRODUCTOS*/
 .productosPage{

@@ -1,7 +1,4 @@
 const productsContainers = document.querySelectorAll(".productos")
-const radioBtns = document.querySelectorAll('.slidesBtns input');
-const introContainer = document.getElementById('intro');
-
 
 productsList = []
 
@@ -28,16 +25,8 @@ const renderProducts = (container, products) =>{
     })
 }
 
-function cambiarFondo() {
-  if (radioBtns[0].checked) {
-    introContainer.style.backgroundImage = "url('img/principal1.png')";
-  } else if (radioBtns[1].checked) {
-    introContainer.style.backgroundImage = "url('img/principal2.png')";
-  }
-}
 
 const init = async () =>{
-    cambiarFondo();
     productsList = await getProducts()
     
     productsContainers.forEach(c=> {
@@ -51,7 +40,6 @@ const init = async () =>{
         }
     })
 
-    radioBtns.forEach(radio => radio.addEventListener('change', cambiarFondo));
 }
 
 init()
