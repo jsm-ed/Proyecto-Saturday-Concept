@@ -16,7 +16,7 @@
       <!--divs de separación para estructura-->
       <div>
         <a href="index.html"><img src="img/logo.png" alt="logo" /></a>
-        <input type="text" id="buscador" placeholder="Buscar productos..." />
+        <input type="text" class="buscador" id="buscador" placeholder="Buscar productos..." />
       </div>
       <div>
         <!--Sin función (Probablemente lo hayan puesto porque tienen pensado expandirse en un futuro)-->
@@ -31,7 +31,7 @@
       <!--NAV-->
       <nav>
         <div class="elementoNav">
-          <a href="./collections/collection.html">Sneakers</a>
+          <a href="/collections/collection.html?collection=sneakers">Sneakers</a>
           <div class="submenu">
             <div>
               <h4>NIKE</h4>
@@ -69,9 +69,9 @@
             </div>
           </div>
         </div>
-        <div class="elementoNav"><a href="#">Streetwear</a></div>
-        <div class="elementoNav"><a href="#">Accesorios</a></div>
-        <div class="elementoNav"><a href="#">New Era</a></div>
+        <div class="elementoNav"><a href="/collections/collection.html?collection=streetwear">Streetwear</a></div>
+        <div class="elementoNav"><a href="/collections/collection.html?collection=accesorios">Accesorios</a></div>
+        <div class="elementoNav"><a href="/collections/collection.html?collection=new era">New Era</a></div>
         <div class="elementoNav"><a href="#">Marcas</a></div>
         <div class="elementoNav"><a href="#">Donde estamos</a></div>
       </nav>
@@ -96,8 +96,8 @@
           </div>
         </div>
         <div class="slidesBtns">
-          <input type="radio" name="slides1" checked />
-          <input type="radio" name="slides1" />
+          <input type="radio" name="slides1" checked/>
+          <input type="radio" name="slides1"/>
         </div>
       </div>
 
@@ -215,6 +215,8 @@
         </div>
       </div>
     </main>
+
+    <!--FOOTER-->
     <footer>
       <div>
         <h3>Comprar</h3>

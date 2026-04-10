@@ -1,16 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Juan Sastre Montero LLMM</title>
     <link rel="stylesheet" href="/css/styles.css" />
     <script defer src="/js/app.js"></script>
-  </head>
-  <body>
+</head>
+<body>
     <!--HEADER-->
     <header>
       <!--divs de separación para estructura-->
@@ -19,19 +16,19 @@
         <input type="text" class="buscador" id="buscador" placeholder="Buscar productos..." />
       </div>
       <div>
+        <!--Sin función (Probablemente lo hayan puesto porque tienen pensado expandirse en un futuro)-->
         <select name="pais" id="pais">
           <option value="">España (EUR)</option>
         </select>
         <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
       </div>
     </header>
-    <!--Div para estructurar-->
-    <div class="centrado">
+    <!--NAV-->
+      <div class="centrado">
+      <!--NAV-->
       <nav>
         <div class="elementoNav">
-          <a href="/collections/collection.html?collection=sneakers"
-            >Sneakers</a
-          >
+          <a href="/collections/collection.html?collection=sneakers">Sneakers</a>
           <div class="submenu">
             <div>
               <h4>NIKE</h4>
@@ -69,26 +66,18 @@
             </div>
           </div>
         </div>
-        <div class="elementoNav">
-          <a href="/collections/collection.html?collection=streetwear"
-            >Streetwear</a
-          >
-        </div>
-        <div class="elementoNav">
-          <a href="/collections/collection.html?collection=accesorios"
-            >Accesorios</a
-          >
-        </div>
-        <div class="elementoNav">
-          <a href="/collections/collection.html?collection=new era">New Era</a>
-        </div>
-        <div class="elementoNav"><a href="">Marcas</a></div>
-        <div class="elementoNav"><a href="">Donde estamos</a></div>
+        <div class="elementoNav"><a href="/collections/collection.html?collection=streetwear">Streetwear</a></div>
+        <div class="elementoNav"><a href="/collections/collection.html?collection=accesorios">Accesorios</a></div>
+        <div class="elementoNav"><a href="/collections/collection.html?collection=new era">New Era</a></div>
+        <div class="elementoNav"><a href="#">Marcas</a></div>
+        <div class="elementoNav"><a href="#">Donde estamos</a></div>
       </nav>
     </div>
     <!--MAIN-->
-    <main class="productosPage listadoProductos">
-      <section class="sectionProductos">
+    <main class="listadoProductos" id="pagBusqueda">
+        <h1>Resultados de búsqueda</h1>
+        <div class="centrado"><input type="text" id="buscador2" class="buscador centrado"></div>
+        <section class="sectionProductos">
         <div id="colection">
           <h1></h1>
           <p></p>
@@ -97,15 +86,9 @@
         <div class="productos"></div>
       </section>
       <div class="paginas">
-        <button class="active">1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>...</button>
-        <button>7</button>
-        <button><i class="fa-solid fa-chevron-right"></i></button>
+        
       </div>
     </main>
-
     <!--FOOTER-->
     <footer>
       <div>
@@ -145,5 +128,5 @@
     <div id="final">
       © 2026 · Trabajo académico · Juan Sastre Montero · IES EMILI DARDER
     </div>
-  </body>
+</body>
 </html>

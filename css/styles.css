@@ -22,6 +22,16 @@ a{
 }
 
 /*Esilos generales*/
+.buscador{
+    width: 25rem;
+    border: 1px solid var(--borde);
+    border-radius: 7px;
+    padding: 10px 15px;
+    &::placeholder{
+        font-size: 14px
+    }
+}
+
 .centrado{
     display: flex;
     justify-content: center;
@@ -102,6 +112,53 @@ a{
                     transform: translateY(-2px); 
                 }
             }
+        }
+    }
+}
+
+.listadoProductos{
+    .sectionProductos{
+        .productos{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            article{
+                transition: 0.25s;
+                border-radius: 15px;
+                .contenidoProd{
+                    height: 16vh;
+                    padding: 15px 0;
+                    font-weight: 600;
+                    letter-spacing: 1.25px;
+                }
+                &:hover{
+                    box-shadow: 0px 0px 31px 5px rgba(0,0,0,0.11);
+                }
+            }
+        }
+    }
+    .paginas{
+        display: flex;
+        justify-content: center;
+        gap:30px;
+        margin-bottom: 7%;
+        button{
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 1.5px solid transparent;
+            padding: 7px;
+            background-color: white;
+            font-size: 1rem;
+            color: #707070;
+            &:hover{
+                cursor: pointer;
+                color: #000000;
+                border-bottom: 1.5px solid black;
+            }
+        }
+        .active{
+            cursor: pointer;
+            color: #000000;
+            border-bottom: 1.5px solid black;
         }
     }
 }
@@ -234,15 +291,6 @@ header{
     img{
         width: 3.5rem;
     }   
-    input{
-        width: 25rem;
-        border: 1px solid var(--borde);
-        border-radius: 7px;
-        padding: 10px 15px;
-        &::placeholder{
-            font-size: 14px
-        }
-    }
     select{
         border: 1px solid var(--borde);
         border-radius: var(--radioBorde);
@@ -301,6 +349,7 @@ nav{
             background-color: #ffffff;
             opacity: 0;
             border-radius: 15px;
+            box-shadow: 0px 0px 31px 5px rgba(0,0,0,0.11);
 
             font-family: Inter;
             letter-spacing: 1.1px;
@@ -448,13 +497,13 @@ footer{
     text-align: center;
 }
 
-/*PRODUCTOS*/
+/*COLLECTIONS*/
 .productosPage{
     #colection{
         text-align: center;
         margin-bottom: 15px;
         h1{
-            margin: 25px 0;
+            margin-bottom: 15px;
             font-size: 3.3rem;
             font-weight: 600;
         }
@@ -463,23 +512,25 @@ footer{
             color: #707070;
         }
     }
-    .sectionProductos{
-        .productos{
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            article{
-                transition: 0.25s;
-                border-radius: var(--radioBorde);
-                .contenidoProd{
-                    padding: 0;
-                    font-weight: 600;
-                    letter-spacing: 1.25px;
-                }
-                &:hover{
-                    box-shadow: 0px 0px 31px 5px rgba(0,0,0,0.11);
-                }
-            }
-    }
-}
 }
 
+
+#pagBusqueda{
+    h1{
+        margin: 4% 0 1% 0;
+        text-align: center;
+        font-weight: 600 ;
+    }
+    .buscador{
+        width: 45rem;
+        height: 7vh;
+        border-radius: 12px;
+        border: 1.4px solid black;
+        font-size: 1rem;
+    }
+    .noEncontrado{
+        margin-top: 1%;
+        font-size: 1.1rem;
+        color: #707070;
+    }
+}
