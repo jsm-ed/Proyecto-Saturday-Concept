@@ -1,6 +1,8 @@
 const productsContainers = document.querySelectorAll(".productos")
+
 const buscadorTag = document.querySelector("#buscador")
 const buscadorTag2 = document.querySelector("#buscador2")
+
 
 //Variables collections
 const params = new URLSearchParams(window.location.search)
@@ -9,7 +11,8 @@ const collection = params.get("collection")
 //Variables searcher
 const busqueda = params.get("q")
 
-productsList = []
+let productsList = []
+let colList = []
 
 //Peticion fetch a JSON
 const getProducts = async () =>{
@@ -49,13 +52,20 @@ const renderIndexProducts = ()=>{
     })
 }
 
-//Mostrar productos collections
+const renderPages = (list) =>{
+    let numProdMostrados = 6*4
+    let primerProdMostrado = 0
+    let ultimoProdMostrado = numProdMostrados
+    let pagina = list.slice(primerProdMostrado, ultimoProdMostrado)        
+}
+
+//Mostrar productos collections   !!!!!HACE FALTA REFACTORIZAR
 const renderCollection = (collection) => {
     const colTitle = document.querySelector("#colection h1")
     const colNum = document.querySelector("#colection p")
     const btnsPags = document.querySelector(".paginas")
     
-    const colList = productsList.filter(p => p.section==collection)
+    colList = productsList.filter(p => p.section==collection)
     
     let numProdMostrados = 6*4
     let primerProdMostrado = 0
@@ -82,6 +92,7 @@ const renderCollection = (collection) => {
     }
 }
 
+//Filtrar lista por nombre, seccion y marca
 const buscar = (palabra) =>{
     palabraMayus = palabra.toUpperCase()
     const searchedList = productsList.filter(p=>p.name.toUpperCase().includes(palabraMayus) || 
@@ -90,7 +101,7 @@ const buscar = (palabra) =>{
     return searchedList
 }
 
-
+//Añadir eventlistener al input del header
 const buscadorEvent = () =>{
     buscadorTag.addEventListener("keydown", function(e){
         if(e.key === "Enter"){
@@ -99,6 +110,7 @@ const buscadorEvent = () =>{
         }
     })
 }
+//Detalles y listener input del main de la pagina search
 const buscador2Event = ()=>{
     if(buscadorTag2){
         buscadorTag2.value=busqueda
@@ -111,6 +123,23 @@ const buscador2Event = ()=>{
     }
 }
 
+const renderBusqueda = ()=>{
+    const resultado = buscar(busqueda)
+    
+    buscadorTag.value=busqueda
+    buscador2Event()
+    if(resultado.length < 1){
+        const containerProducts = document.querySelector(".sectionProductos")
+        containerProducts.innerHTML=`
+            <p class="noEncontrado">No se encontraron resultados para "${busqueda}". Revisa la ortografía o usa una palabra o frase diferente.</p>
+            `
+    }
+    else{
+        renderProducts(productsContainers[0], resultado)
+    }  
+}
+
+
 //MAIN
 const init = async () =>{
     productsList = await getProducts()
@@ -119,25 +148,8 @@ const init = async () =>{
     if (collection) {renderCollection(collection)}
 
     buscadorEvent()
-    if (busqueda) {
-        const resultado = buscar(busqueda)
-        
-        buscadorTag.value=busqueda
-        buscador2Event()
-
-        if(resultado.length < 1){
-            const containerProducts = document.querySelector(".sectionProductos")
-            containerProducts.innerHTML=`
-                <p class="noEncontrado">No se encontraron resultados para "${busqueda}". Revisa la ortografía o usa una palabra o frase diferente.</p>
-                `
-        }
-        else{
-            
-            renderProducts(productsContainers[0], resultado)
-        }
-
-    }
-    
+    if (busqueda){renderBusqueda()}
 }
 
 init()
+console.log(colList)

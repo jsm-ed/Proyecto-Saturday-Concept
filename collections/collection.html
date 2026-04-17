@@ -11,6 +11,39 @@
     <script defer src="/js/app.js"></script>
   </head>
   <body>
+    <!--Menu filtrado-->
+    <div class="filterPage">
+      <div class="transparent"></div>
+      <div class="filterMenu">
+        <div id="filterHeader">
+          <p>Filtros</p>
+          <button id="exitFilter"><i class="fa-solid fa-x"></i></button>
+        </div>
+        <div>
+          <details id="disponibilidad">
+            <summary>DISPONIBILIDAD</summary>
+            <button onclick='stockFilter("in")'>En existencia</button>
+            <button onclick='stockFilter("notIn")'>Agotado</button>
+          </details>
+          <details id="talla">
+            <summary>TALLA</summary>
+            <button></button>
+            <button></button>
+          </details>
+          <details id="marca">
+            <summary>MARCA</summary>
+            <button></button>
+            <button></button>
+          </details>
+          <details id="precio">
+            <summary>PRECIO</summary>
+            <input type="number" id="minPrice" placeholder="Min">
+            <input type="number" id="maxPrice" placeholder="Max">
+          </details>
+        </div>
+        <button id="btn-aplicar-filtro">APPLY FILTER</button>
+      </div>
+    </div>
     <!--HEADER-->
     <header>
       <!--divs de separación para estructura-->
@@ -91,17 +124,16 @@
       <section class="sectionProductos">
         <div id="colection">
           <h1></h1>
-          <p></p>
+          <div>
+            <p></p>
+            <button id="btn-filtrar"><i class="fa-solid fa-bars-staggered"></i> Filtrar</button>
+          </div>
         </div>
 
         <div class="productos"></div>
       </section>
       <div class="paginas">
-        <button class="active">1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>...</button>
-        <button>7</button>
+
         <button><i class="fa-solid fa-chevron-right"></i></button>
       </div>
     </main>

@@ -10,6 +10,7 @@
 }
 body{
     font-family: Inter;
+    /*overflow: hidden;*/
 }
 a{
     text-decoration: none;
@@ -204,7 +205,7 @@ a{
     .izq{
         left: 2%;
     }
-    button{
+    .izq, .drch{
         position: absolute;
         z-index: 15;
         top: 45%;
@@ -273,6 +274,43 @@ a{
     }
 }
 
+#btn-filtrar{
+    background-color: transparent;
+    padding: 6px 15px;
+    border: 1px solid var(--borde);
+    border-radius: var(--radioBorde);
+    font-size: 0.9rem;
+
+    cursor: pointer;
+    transition: 0.25s;
+    &:hover{
+        background-color: #f3f2f2;
+        border: 1px solid #838383;
+    }
+}
+
+.filterPage{
+    display: flex;
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    visibility: hidden;
+    .transparent{
+        flex-basis: 61.25%;
+        height: 100vh;
+        background-color: transparent;
+    }
+    .filterMenu{
+        background-color: #ffffff;
+        flex-basis: 38.75%;
+        box-shadow: 0px 0px 31px 5px rgba(0,0,0,0.11);
+        padding: 15px;
+        #filterHeader{
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}
 /*HEADER*/
 header{
     display: flex;
@@ -354,7 +392,7 @@ nav{
             font-family: Inter;
             letter-spacing: 1.1px;
 
-            transition: 0.25s;
+            transition: 0.2s;
             transform: translateY(0);
             visibility: hidden;
 
@@ -500,21 +538,27 @@ footer{
 /*COLLECTIONS*/
 .productosPage{
     #colection{
-        text-align: center;
         margin-bottom: 15px;
         h1{
             margin-bottom: 15px;
-            font-size: 3.3rem;
+            font-size: 2rem;
             font-weight: 600;
         }
-        p{
-            font-size: 0.9em;
-            color: #707070;
+        div{
+            margin-left: 5px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            p{
+                font-size: 0.9em;
+                color: #707070;
+            }
         }
     }
 }
 
-
+/*SEARCH*/
 #pagBusqueda{
     h1{
         margin: 4% 0 1% 0;
