@@ -1,4 +1,5 @@
 - css filtros 
+- ordenar de...
 - Página dinámica de cada producto
 - Carrito
 
