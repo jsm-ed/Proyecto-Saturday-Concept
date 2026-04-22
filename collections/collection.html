@@ -17,30 +17,33 @@
       <div class="filterMenu">
         <div id="filterHeader">
           <p>Filtros</p>
-          <button id="exitFilter" onclick='visibilityFilter("hidden")'><i class="fa-solid fa-x"></i></button>
+          <button id="exitFilter" onclick="visibilityFilter('hidden')">
+            <i class="fa-solid fa-x"></i>
+          </button>
         </div>
         <div>
           <details id="disponibilidad">
             <summary>DISPONIBILIDAD</summary>
-            <button>En existencia</button>
-            <button>Agotado</button>
+            <button onclick="toggleFilter('stock', 'in', this)">
+              En existencia
+            </button>
+            <button onclick="toggleFilter('stock', 'notIn', this)">
+              Agotado
+            </button>
           </details>
           <details id="talla">
-            <summary>TALLA</summary>
-
           </details>
           <details id="marca">
-            <summary>MARCA</summary>
-            <button></button>
-            <button></button>
           </details>
           <details id="precio">
             <summary>PRECIO</summary>
-            <input type="number" id="minPrice" placeholder="Min">
-            <input type="number" id="maxPrice" placeholder="Max">
+            <input type="number" id="minPrice" placeholder="Min" />
+            <input type="number" id="maxPrice" placeholder="Max" />
           </details>
         </div>
-        <button id="btn-aplicar-filtro" onclick="applyFilter()">APPLY FILTER</button>
+        <button id="btn-aplicar-filtro" onclick="applyFilter()">
+          APPLY FILTER
+        </button>
       </div>
     </div>
     <!--HEADER-->
@@ -48,7 +51,12 @@
       <!--divs de separación para estructura-->
       <div>
         <a href="/index.html"><img src="/img/logo.png" alt="logo" /></a>
-        <input type="text" class="buscador" id="buscador" placeholder="Buscar productos..." />
+        <input
+          type="text"
+          class="buscador"
+          id="buscador"
+          placeholder="Buscar productos..."
+        />
       </div>
       <div>
         <select name="pais" id="pais">
@@ -123,18 +131,18 @@
       <section class="sectionProductos">
         <div id="colection">
           <h1></h1>
-          <div>
+          <div class="productsMenu">
             <p></p>
-            <button id="btn-filtrar" onclick='visibilityFilter("visible")'><i class="fa-solid fa-bars-staggered"></i> Filtrar</button>
+            <button id="btn-filtrar" onclick="visibilityFilter('visible')">
+              <i class="fa-solid fa-bars-staggered"></i> Filtrar
+            </button>
+            <select name="Ordenar por..." id=""></select>
           </div>
         </div>
 
         <div class="productos"></div>
       </section>
-      <div class="paginas">
-
-        <button><i class="fa-solid fa-chevron-right"></i></button>
-      </div>
+      <div class="paginas"></div>
     </main>
 
     <!--FOOTER-->

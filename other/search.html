@@ -1,19 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Proyecto Juan Sastre Montero LLMM</title>
     <link rel="stylesheet" href="/css/styles.css" />
     <script defer src="/js/app.js"></script>
-</head>
-<body>
+  </head>
+  <body>
+    <!--Menu filtrado-->
+    <div class="filterPage">
+      <div class="transparent"></div>
+      <div class="filterMenu">
+        <div id="filterHeader">
+          <p>Filtros</p>
+          <button id="exitFilter" onclick="visibilityFilter('hidden')">
+            <i class="fa-solid fa-x"></i>
+          </button>
+        </div>
+        <div>
+          <details id="disponibilidad">
+            <summary>DISPONIBILIDAD</summary>
+            <button onclick="toggleFilter('stock', 'in', this)">
+              En existencia
+            </button>
+            <button onclick="toggleFilter('stock', 'notIn', this)">
+              Agotado
+            </button>
+          </details>
+          <details id="talla">
+          </details>
+          <details id="marca">
+          </details>
+          <details id="precio">
+            <summary>PRECIO</summary>
+            <input type="number" id="minPrice" placeholder="Min" />
+            <input type="number" id="maxPrice" placeholder="Max" />
+          </details>
+        </div>
+        <button id="btn-aplicar-filtro" onclick="applyFilter()">
+          APPLY FILTER
+        </button>
+      </div>
+    </div>
     <!--HEADER-->
     <header>
       <!--divs de separación para estructura-->
       <div>
         <a href="/index.html"><img src="/img/logo.png" alt="logo" /></a>
-        <input type="text" class="buscador" id="buscador" placeholder="Buscar productos..." />
+        <input
+          type="text"
+          class="buscador"
+          id="buscador"
+          placeholder="Buscar productos..."
+        />
       </div>
       <div>
         <!--Sin función (Probablemente lo hayan puesto porque tienen pensado expandirse en un futuro)-->
@@ -24,11 +64,13 @@
       </div>
     </header>
     <!--NAV-->
-      <div class="centrado">
+    <div class="centrado">
       <!--NAV-->
       <nav>
         <div class="elementoNav">
-          <a href="/collections/collection.html?collection=sneakers">Sneakers</a>
+          <a href="/collections/collection.html?collection=sneakers"
+            >Sneakers</a
+          >
           <div class="submenu">
             <div>
               <h4>NIKE</h4>
@@ -66,28 +108,42 @@
             </div>
           </div>
         </div>
-        <div class="elementoNav"><a href="/collections/collection.html?collection=streetwear">Streetwear</a></div>
-        <div class="elementoNav"><a href="/collections/collection.html?collection=accesorios">Accesorios</a></div>
-        <div class="elementoNav"><a href="/collections/collection.html?collection=new era">New Era</a></div>
+        <div class="elementoNav">
+          <a href="/collections/collection.html?collection=streetwear"
+            >Streetwear</a
+          >
+        </div>
+        <div class="elementoNav">
+          <a href="/collections/collection.html?collection=accesorios"
+            >Accesorios</a
+          >
+        </div>
+        <div class="elementoNav">
+          <a href="/collections/collection.html?collection=new era">New Era</a>
+        </div>
         <div class="elementoNav"><a href="#">Marcas</a></div>
         <div class="elementoNav"><a href="#">Donde estamos</a></div>
       </nav>
     </div>
     <!--MAIN-->
     <main class="listadoProductos" id="pagBusqueda">
-        <h1>Resultados de búsqueda</h1>
-        <div class="centrado"><input type="text" id="buscador2" class="buscador centrado"></div>
-        <section class="sectionProductos">
-        <div id="colection">
-          <h1></h1>
-          <p></p>
-        </div>
+      <h1>Resultados de búsqueda</h1>
+      <div class="centrado">
+        <input type="text" id="buscador2" class="buscador centrado" />
+      </div>
+      <div class="productsMenu centrado">
+            <p></p>
+            <button id="btn-filtrar" onclick="visibilityFilter('visible')">
+              <i class="fa-solid fa-bars-staggered"></i> Filtrar
+            </button>
+            <select name="Ordenar por..." id=""></select>
+          </div>
 
+      </div>
+      <section class="sectionProductos">
         <div class="productos"></div>
       </section>
-      <div class="paginas">
-        
-      </div>
+      <div class="paginas"></div>
     </main>
     <!--FOOTER-->
     <footer>
@@ -128,5 +184,5 @@
     <div id="final">
       © 2026 · Trabajo académico · Juan Sastre Montero · IES EMILI DARDER
     </div>
-</body>
+  </body>
 </html>

@@ -7,7 +7,7 @@ const productsContainers = document.querySelectorAll(".productos")
 const params = new URLSearchParams(window.location.search)
 const collection = params.get("collection")
 const filterMenu = document.querySelector(".filterPage")
-const colNum = document.querySelector("#colection p")
+const colNum = document.querySelector(".productsMenu p")
 
 
 //Variables searcher
@@ -21,7 +21,9 @@ let colList = []
 let filteredList = []
 
 let filters = {
-    "sizes":[]
+    "stock":[],
+    "sizes":[],
+    "brands":[]
 }
 //Peticion fetch a JSON
 const getProducts = async () =>{
@@ -108,7 +110,7 @@ const buscar = (palabra) =>{
 
 const renderBusqueda = ()=>{
     const resultado = buscar(busqueda)
-    
+    colList = resultado
     buscadorTag.value=busqueda
     buscador2Event()
     if(resultado.length < 1){
@@ -118,9 +120,11 @@ const renderBusqueda = ()=>{
             `
     }
     else{
-        renderPage(resultado, 1)
-        pagination(resultado)
+        renderPage(colList, 1)
+        pagination(colList)
     }  
+    colNum.innerHTML = `${colList.length} productos`
+    console.log(colList)
 }
 //Añadir eventlistener al input del header
 const buscadorEvent = () =>{
@@ -154,13 +158,20 @@ const renderSizes = ()=>{
     }else if(collection == "streetwear"){
         sizes = ["XS", "S", "M", "L", "XL"]
     }else if(collection == "accesorios"){
-        sizes = ["6 7/8", "7", "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8", "22", "23.5", "25", "27", "28", "36-40", "41-46"]
+        sizes = ["6 7/8", "7", "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8", "22", "23.5", 
+            "25", "27", "28", "36-40", "41-46"
+        ]
     }else if(collection == "new era"){
         sizes = ["6 7/8", "7", "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8"]
+    }else{
+        sizes = ["37", "38", "39", "40", "41", "42", "43", "44", "45", "XS", "S", "M", "L", "XL","6 7/8", "7", 
+            "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8", "22", "23.5", "25", "27", "28", 
+            "36-40", "41-46", "6 7/8", "7", "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8"
+        ]
     }
 
     sizes.forEach(s=> sizesContainer.innerHTML += `
-        <button onclick="sizeFilter('${s}', this)">${s}</button>
+        <button onclick="toggleFilter('sizes', '${s}', this)">${s}</button>
     `
     )
 }
@@ -178,7 +189,7 @@ const renderBrands = ()=>{
             })
 
     brands.forEach(b=>brandsContainer.innerHTML += `
-        <button>${b}</button>
+        <button onclick="toggleFilter('brands','${b}', this)">${b}</button>
     `)
 }
 
@@ -186,23 +197,39 @@ const visibilityFilter = (visibility)=>{
     filterMenu.style.visibility = visibility
 }
 
-const sizeFilter = (talla, element)=>{
-    if(filters.sizes.includes(talla)){
-        const sizeIndex = filters.sizes.indexOf(talla)
-        filters.sizes.splice(sizeIndex, 1)
-    }else{
-        filters.sizes.push(talla)
-    }
-    element.classList.toggle("active")
+const toggleFilter = (type, value, elemento) => {
+    const list = filters[type]
+    const index = list.indexOf(value)
+
+    index == -1 ? list.push(value) : list.splice(index, 1) 
+    elemento.classList.toggle("active")
 }
 
+
 const applyFilter = ()=>{
-    filteredList = colList.filter(p =>
-        p.size.some(s => filters.sizes.includes(s))
-    )
+    const minPrice = document.getElementById("minPrice")
+    const maxPrice = document.getElementById("maxPrice")
+
+    filteredList = colList
+
+    if(filters.stock.includes("in") && !filters.stock.includes("notIn")){
+        filteredList = filteredList.filter(p=>p.stock > 0)
+    }else if(filters.stock.includes("notIn") && !filters.stock.includes("in")){
+        filteredList = filteredList.filter(p=>p.stock == 0)
+    }
+    if(filters.sizes.length > 0){
+        filteredList = filteredList.filter(p=> p.size.some(s => filters.sizes.includes(s)))
+    }
+    if(filters.brands.length > 0){
+        filteredList = filteredList.filter(p=> p.brand.some(b => filters.brands.includes(b)))
+    }
+    if(minPrice.value){filteredList = filteredList.filter(p=> p.price >= parseFloat(minPrice.value))}
+    if(maxPrice.value){filteredList = filteredList.filter(p=> p.price <= parseFloat(maxPrice.value))}
+    colNum.innerHTML = `${filteredList.length} productos`
     renderPage(filteredList, 1)
-    colNum.innerHTML = `${colList.length} productos`
-    
+    pagination(filteredList)
+        console.log(filteredList)
+
 }
 
 //MAIN
@@ -217,7 +244,11 @@ const init = async () =>{
     }
 
     buscadorEvent()
-    if (busqueda){renderBusqueda()}
+    if (busqueda){
+        renderBusqueda()
+        renderSizes()
+        renderBrands()
+    }
 }
 
 init()
