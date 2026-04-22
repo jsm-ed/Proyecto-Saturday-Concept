@@ -126,6 +126,7 @@ a{
                 transition: 0.25s;
                 border-radius: 15px;
                 .contenidoProd{
+                    height: 16vh;
                     padding: 15px 0;
                     font-weight: 600;
                     letter-spacing: 1.25px;
