@@ -229,7 +229,6 @@ a{
         align-items: center;
         gap: 1.5%;
         padding: 20px;
-        height: fit-content;
         
         article{
             flex-basis: 25%;
@@ -247,6 +246,7 @@ a{
                 height: 50vh;
             }
             .contenidoProd{
+                height: 10vh;
                 margin-left: 15px;
                 padding-top: 20px;
                 font-size: 15px;
