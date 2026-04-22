@@ -17,18 +17,17 @@
       <div class="filterMenu">
         <div id="filterHeader">
           <p>Filtros</p>
-          <button id="exitFilter"><i class="fa-solid fa-x"></i></button>
+          <button id="exitFilter" onclick='visibilityFilter("hidden")'><i class="fa-solid fa-x"></i></button>
         </div>
         <div>
           <details id="disponibilidad">
             <summary>DISPONIBILIDAD</summary>
-            <button onclick='stockFilter("in")'>En existencia</button>
-            <button onclick='stockFilter("notIn")'>Agotado</button>
+            <button>En existencia</button>
+            <button>Agotado</button>
           </details>
           <details id="talla">
             <summary>TALLA</summary>
-            <button></button>
-            <button></button>
+
           </details>
           <details id="marca">
             <summary>MARCA</summary>
@@ -41,7 +40,7 @@
             <input type="number" id="maxPrice" placeholder="Max">
           </details>
         </div>
-        <button id="btn-aplicar-filtro">APPLY FILTER</button>
+        <button id="btn-aplicar-filtro" onclick="applyFilter()">APPLY FILTER</button>
       </div>
     </div>
     <!--HEADER-->
@@ -126,7 +125,7 @@
           <h1></h1>
           <div>
             <p></p>
-            <button id="btn-filtrar"><i class="fa-solid fa-bars-staggered"></i> Filtrar</button>
+            <button id="btn-filtrar" onclick='visibilityFilter("visible")'><i class="fa-solid fa-bars-staggered"></i> Filtrar</button>
           </div>
         </div>
 

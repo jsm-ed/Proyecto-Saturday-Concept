@@ -1,19 +1,28 @@
+const numProdPagina = 4*6
+
+// Variables Index
 const productsContainers = document.querySelectorAll(".productos")
-
-const buscadorTag = document.querySelector("#buscador")
-const buscadorTag2 = document.querySelector("#buscador2")
-
 
 //Variables collections
 const params = new URLSearchParams(window.location.search)
 const collection = params.get("collection")
+const filterMenu = document.querySelector(".filterPage")
+const colNum = document.querySelector("#colection p")
+
 
 //Variables searcher
+const buscadorTag = document.querySelector("#buscador")
+const buscadorTag2 = document.querySelector("#buscador2")
 const busqueda = params.get("q")
+
 
 let productsList = []
 let colList = []
+let filteredList = []
 
+let filters = {
+    "sizes":[]
+}
 //Peticion fetch a JSON
 const getProducts = async () =>{
     const response = await fetch('/data/products.JSON')
@@ -52,55 +61,67 @@ const renderIndexProducts = ()=>{
     })
 }
 
-const renderPages = (list) =>{
-    let numProdMostrados = 6*4
-    let primerProdMostrado = 0
-    let ultimoProdMostrado = numProdMostrados
-    let pagina = list.slice(primerProdMostrado, ultimoProdMostrado)        
+//Empaginado
+const pagination = (list)=>{
+    const btnsPags = document.querySelector(".paginas")
+    btnsPags.innerHTML=""
+    for (let i = 1; i <= Math.ceil(list.length / numProdPagina); i++) {
+        const btn = document.createElement("button")
+        btn.textContent = i
+        btn.addEventListener("click", () => {
+            renderPage(list, i)
+        })
+        btnsPags.appendChild(btn)
+    }
+}
+
+const renderPage = (list, page)=>{
+    let primerProdMostrado = (page - 1) * numProdPagina
+    let ultimoProdMostrado = primerProdMostrado + numProdPagina
+    const pagina = list.slice(primerProdMostrado, ultimoProdMostrado)
+    renderProducts(productsContainers[0], pagina)
 }
 
 //Mostrar productos collections   !!!!!HACE FALTA REFACTORIZAR
 const renderCollection = (collection) => {
     const colTitle = document.querySelector("#colection h1")
-    const colNum = document.querySelector("#colection p")
-    const btnsPags = document.querySelector(".paginas")
+    if (collection == "accesorios"){
+        colList = productsList.filter(p => p.section==collection || p.section == "new era")
+    }else{
+        colList = productsList.filter(p => p.section==collection)
+    }
+    renderPage(colList, 1)
+    pagination(colList)
     
-    colList = productsList.filter(p => p.section==collection)
-    
-    let numProdMostrados = 6*4
-    let primerProdMostrado = 0
-    let ultimoProdMostrado = numProdMostrados
-    let pagina = colList.slice(primerProdMostrado, ultimoProdMostrado)        
-
     colTitle.innerHTML = collection.toUpperCase()
     colNum.innerHTML = `${colList.length} productos`
-    
-    renderProducts(productsContainers[0], pagina)
-    btnsPags.innerHTML=""
-    for (let i = 1; i <= Math.ceil(colList.length / numProdMostrados); i++) {
-        const btn = document.createElement("button")
-        btn.textContent = i
-
-        btn.addEventListener("click", () => {
-            primerProdMostrado = (i - 1) * numProdMostrados
-            ultimoProdMostrado = primerProdMostrado + numProdMostrados
-            pagina = colList.slice(primerProdMostrado, ultimoProdMostrado)
-            renderProducts(productsContainers[0], pagina)
-        })
-
-        btnsPags.appendChild(btn)
-    }
 }
 
 //Filtrar lista por nombre, seccion y marca
 const buscar = (palabra) =>{
     palabraMayus = palabra.toUpperCase()
     const searchedList = productsList.filter(p=>p.name.toUpperCase().includes(palabraMayus) || 
-                        p.section.toUpperCase().includes(palabraMayus) || 
-                        p.brand.some(b => b.toUpperCase().includes(palabraMayus)))
+        p.section.toUpperCase().includes(palabraMayus) || 
+        p.brand.some(b => b.toUpperCase().includes(palabraMayus)))
     return searchedList
 }
 
+const renderBusqueda = ()=>{
+    const resultado = buscar(busqueda)
+    
+    buscadorTag.value=busqueda
+    buscador2Event()
+    if(resultado.length < 1){
+        const containerProducts = document.querySelector(".sectionProductos")
+        containerProducts.innerHTML=`
+            <p class="noEncontrado">No se encontraron resultados para "${busqueda}". Revisa la ortografía o usa una palabra o frase diferente.</p>
+            `
+    }
+    else{
+        renderPage(resultado, 1)
+        pagination(resultado)
+    }  
+}
 //Añadir eventlistener al input del header
 const buscadorEvent = () =>{
     buscadorTag.addEventListener("keydown", function(e){
@@ -123,33 +144,80 @@ const buscador2Event = ()=>{
     }
 }
 
-const renderBusqueda = ()=>{
-    const resultado = buscar(busqueda)
-    
-    buscadorTag.value=busqueda
-    buscador2Event()
-    if(resultado.length < 1){
-        const containerProducts = document.querySelector(".sectionProductos")
-        containerProducts.innerHTML=`
-            <p class="noEncontrado">No se encontraron resultados para "${busqueda}". Revisa la ortografía o usa una palabra o frase diferente.</p>
-            `
+//Filtros 
+const renderSizes = ()=>{
+    const sizesContainer = document.getElementById("talla")
+    sizesContainer.innerHTML = `<summary>TALLA</summary>`
+    let sizes = []
+    if (collection == "sneakers"){
+        sizes = ["37", "38", "39", "40", "41", "42", "43", "44", "45"]
+    }else if(collection == "streetwear"){
+        sizes = ["XS", "S", "M", "L", "XL"]
+    }else if(collection == "accesorios"){
+        sizes = ["6 7/8", "7", "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8", "22", "23.5", "25", "27", "28", "36-40", "41-46"]
+    }else if(collection == "new era"){
+        sizes = ["6 7/8", "7", "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8"]
     }
-    else{
-        renderProducts(productsContainers[0], resultado)
-    }  
+
+    sizes.forEach(s=> sizesContainer.innerHTML += `
+        <button onclick="sizeFilter('${s}', this)">${s}</button>
+    `
+    )
 }
 
+const renderBrands = ()=>{
+    const brandsContainer = document.getElementById("marca")
+    brandsContainer.innerHTML = `<summary>MARCA</summary>`
+    let brands = []
+    colList.map(p=>p.brand)
+           .flat()
+           .forEach(b=>{
+                if(!brands.includes(b)){
+                    brands.push(b)
+                }
+            })
+
+    brands.forEach(b=>brandsContainer.innerHTML += `
+        <button>${b}</button>
+    `)
+}
+
+const visibilityFilter = (visibility)=>{
+    filterMenu.style.visibility = visibility
+}
+
+const sizeFilter = (talla, element)=>{
+    if(filters.sizes.includes(talla)){
+        const sizeIndex = filters.sizes.indexOf(talla)
+        filters.sizes.splice(sizeIndex, 1)
+    }else{
+        filters.sizes.push(talla)
+    }
+    element.classList.toggle("active")
+}
+
+const applyFilter = ()=>{
+    filteredList = colList.filter(p =>
+        p.size.some(s => filters.sizes.includes(s))
+    )
+    renderPage(filteredList, 1)
+    colNum.innerHTML = `${colList.length} productos`
+    
+}
 
 //MAIN
 const init = async () =>{
     productsList = await getProducts()
-    renderIndexProducts()
+    renderIndexProducts() 
 
-    if (collection) {renderCollection(collection)}
+    if (collection) {
+        renderCollection(collection)
+        renderSizes()
+        renderBrands()
+    }
 
     buscadorEvent()
     if (busqueda){renderBusqueda()}
 }
 
 init()
-console.log(colList)

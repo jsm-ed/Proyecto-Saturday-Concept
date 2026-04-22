@@ -310,6 +310,10 @@ a{
             justify-content: space-between;
         }
     }
+    .active{
+        background-color: #000000;
+        color: #ffffff;
+    }
 }
 /*HEADER*/
 header{
