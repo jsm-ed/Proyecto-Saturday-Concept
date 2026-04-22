@@ -10,7 +10,7 @@
 }
 body{
     font-family: Inter;
-    /*overflow: hidden;*/
+    overflow: auto;
 }
 a{
     text-decoration: none;
@@ -301,7 +301,7 @@ a{
 
 .filterPage{
     display: flex;
-    position: absolute;
+    position: fixed;
     z-index: 100;
     width: 100%;
     visibility: hidden;

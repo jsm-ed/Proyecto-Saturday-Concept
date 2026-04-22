@@ -193,8 +193,14 @@ const renderBrands = ()=>{
     `)
 }
 
-const visibilityFilter = (visibility)=>{
-    filterMenu.style.visibility = visibility
+const visibilityFilter = (visibilidad)=>{
+    filterMenu.style.visibility = visibilidad
+    const body = document.querySelector("body")
+    if(visibilidad=="visible"){
+        body.style.overflow = "hidden"
+    }else if(visibilidad=="hidden"){
+        body.style.overflow = "auto"
+    }
 }
 
 const toggleFilter = (type, value, elemento) => {

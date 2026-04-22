@@ -59,7 +59,7 @@
         />
       </div>
       <div>
-        <select name="pais" id="pais">
+        <select id="pais">
           <option value="">España (EUR)</option>
         </select>
         <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
@@ -136,7 +136,13 @@
             <button id="btn-filtrar" onclick="visibilityFilter('visible')">
               <i class="fa-solid fa-bars-staggered"></i> Filtrar
             </button>
-            <select name="Ordenar por..." id=""></select>
+            <select id="ordenar">
+                <option disabled selected hidden>Ordenar por</option>
+                <option value="az">Alfabéticamente A-Z</option>
+                <option value="za">Alfabéticamente Z-A</option>
+                <option value="min-max">Precio, menor a mayor</option>
+                <option value="max-min">Precio, mayor a menor</option>
+            </select>
           </div>
         </div>
 
