@@ -28,10 +28,8 @@
               Agotado
             </button>
           </details>
-          <details id="talla">
-          </details>
-          <details id="marca">
-          </details>
+          <details id="talla"></details>
+          <details id="marca"></details>
           <details id="precio">
             <summary>PRECIO</summary>
             <input type="number" id="minPrice" placeholder="Min" />
@@ -68,9 +66,7 @@
       <!--NAV-->
       <nav>
         <div class="elementoNav">
-          <a href="/other/collection.html?collection=sneakers"
-            >Sneakers</a
-          >
+          <a href="/other/collection.html?collection=sneakers">Sneakers</a>
           <div class="submenu">
             <div>
               <h4>NIKE</h4>
@@ -109,14 +105,10 @@
           </div>
         </div>
         <div class="elementoNav">
-          <a href="/other/collection.html?collection=streetwear"
-            >Streetwear</a
-          >
+          <a href="/other/collection.html?collection=streetwear">Streetwear</a>
         </div>
         <div class="elementoNav">
-          <a href="/other/collection.html?collection=accesorios"
-            >Accesorios</a
-          >
+          <a href="/other/collection.html?collection=accesorios">Accesorios</a>
         </div>
         <div class="elementoNav">
           <a href="/other/collection.html?collection=new era">New Era</a>
@@ -126,30 +118,42 @@
       </nav>
     </div>
     <!--MAIN-->
-    <main class="listadoProductos" id="pagBusqueda">
-      <h1>Resultados de búsqueda</h1>
-      <div class="centrado">
-        <input type="text" id="buscador2" class="buscador centrado" />
-      </div>
-      <div class="productsMenu centrado">
-            <p></p>
-            <button id="btn-filtrar" onclick="visibilityFilter('visible')">
-              <i class="fa-solid fa-bars-staggered"></i> Filtrar
-            </button>
-            <select id="ordenar">
-              <option disabled selected hidden>Ordenar por</option>
-              <option value="az">Alfabéticamente A-Z</option>
-              <option value="za">Alfabéticamente Z-A</option>
-              <option value="min-max">Precio, menor a mayor</option>
-              <option value="max-min">Precio, mayor a menor</option>
-            </select>
+    <main>
+      <div class="productPage">
+        <div><img src="/img/Productos/95-corteiz-honeyBlack.png" alt="" /></div>
+        <section class="productDescription">
+          <h2>Air Max 95 Corteiz Honey Black</h2>
+          <h3>390€</h3>
+          <h4>TALLA</h4>
+          <div class="grid-tallas">
+            <button onclick=""></button>
+            <button onclick=""></button>
+            <button onclick=""></button>
+            <button onclick=""></button>
+            ...
           </div>
-
+          <button id="addToCart">Agregar al carrito</button>
+          <details>
+            <summary>Descripción</summary>
+            <p id="description"></p>
+          </details>
+          <details>
+            <summary>Envíos y Devoluciones</summary>
+            <p>
+              Recibirás un email de confirmación en cuanto tu pedido sea
+              enviado. Los plazos de entrega pueden variar dependiendo de la
+              ubicación y pueden experimentar demoras en épocas de alta demanda,
+              como promociones especiales, eventos comerciales o la temporada de
+              fiestas.<br/>
+              <br/>
+              Si necesitas devolver tu compra, dispones de 14 días hábiles desde
+              la recepción del pedido para realizarlo. Puedes obtener más
+              información y revisar todos los detalles en nuestra sección de
+              Ayuda.
+            </p>
+          </details>
+        </section>
       </div>
-      <section class="sectionProductos">
-        <div class="productos"></div>
-      </section>
-      <div class="paginas"></div>
     </main>
     <!--FOOTER-->
     <footer>

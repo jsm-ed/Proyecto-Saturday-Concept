@@ -1,10 +1,10 @@
-- css filtros 
-- ordenar de...
 - Página dinámica de cada producto
 - Carrito
+- Página de pago y registro
 
 - API con IA 
 
+- css filtros y ordenar por (en clase)
+- responsive
 - Separar js de index, search y collection
-- Página de pago y registro
-- Mejorar estructura de archivos
+- utilizar swiper para estilos

@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <title>Proyecto Juan Sastre Montero LLMM</title>
     <link rel="stylesheet" href="/css/styles.css" />
     <script defer src="/js/app.js"></script>
@@ -28,10 +31,8 @@
               Agotado
             </button>
           </details>
-          <details id="talla">
-          </details>
-          <details id="marca">
-          </details>
+          <details id="talla"></details>
+          <details id="marca"></details>
           <details id="precio">
             <summary>PRECIO</summary>
             <input type="number" id="minPrice" placeholder="Min" />
@@ -56,16 +57,14 @@
         />
       </div>
       <div>
-        <!--Sin función (Probablemente lo hayan puesto porque tienen pensado expandirse en un futuro)-->
-        <select name="pais" id="pais">
+        <select id="pais">
           <option value="">España (EUR)</option>
         </select>
         <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
       </div>
     </header>
-    <!--NAV-->
+    <!--Div para estructurar-->
     <div class="centrado">
-      <!--NAV-->
       <nav>
         <div class="elementoNav">
           <a href="/other/collection.html?collection=sneakers"
@@ -121,17 +120,16 @@
         <div class="elementoNav">
           <a href="/other/collection.html?collection=new era">New Era</a>
         </div>
-        <div class="elementoNav"><a href="#">Marcas</a></div>
-        <div class="elementoNav"><a href="#">Donde estamos</a></div>
+        <div class="elementoNav"><a href="">Marcas</a></div>
+        <div class="elementoNav"><a href="">Donde estamos</a></div>
       </nav>
     </div>
     <!--MAIN-->
-    <main class="listadoProductos" id="pagBusqueda">
-      <h1>Resultados de búsqueda</h1>
-      <div class="centrado">
-        <input type="text" id="buscador2" class="buscador centrado" />
-      </div>
-      <div class="productsMenu centrado">
+    <main class="productosPage listadoProductos">
+      <section class="sectionProductos">
+        <div id="colection">
+          <h1></h1>
+          <div class="productsMenu">
             <p></p>
             <button id="btn-filtrar" onclick="visibilityFilter('visible')">
               <i class="fa-solid fa-bars-staggered"></i> Filtrar
@@ -144,13 +142,13 @@
               <option value="max-min">Precio, mayor a menor</option>
             </select>
           </div>
+        </div>
 
-      </div>
-      <section class="sectionProductos">
         <div class="productos"></div>
       </section>
       <div class="paginas"></div>
     </main>
+
     <!--FOOTER-->
     <footer>
       <div>
