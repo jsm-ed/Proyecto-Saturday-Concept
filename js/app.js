@@ -152,7 +152,7 @@ const buscador2Event = ()=>{ //Detalles y listener input del main de la pagina s
 //Filtros 
 const renderSizes = ()=>{ //Según la colección, cargar opciones de tallas
     const sizesContainer = document.getElementById("talla") //No tiene carga dinámica porque pueden haber tallas que no estan disponibles
-    sizesContainer.innerHTML = `<summary>TALLA</summary>`
+    sizesContainer.innerHTML = ""
     let sizes = []
     if (collection == "sneakers"){
         sizes = ["37", "38", "39", "40", "41", "42", "43", "44", "45"]
@@ -172,14 +172,14 @@ const renderSizes = ()=>{ //Según la colección, cargar opciones de tallas
     }
 
     sizes.forEach(s=> sizesContainer.innerHTML += `
-        <button onclick="toggleFilter('sizes', '${s}', this)">${s}</button>
+        <button class="btn-blanco" onclick="toggleFilter('sizes', '${s}', this)">${s}</button>
     `
     )
 }
 
 const renderBrands = ()=>{ //Según la sección, cargar dinámicamente las marcas
     const brandsContainer = document.getElementById("marca")
-    brandsContainer.innerHTML = `<summary>MARCA</summary>`
+    brandsContainer.innerHTML = ""
     let brands = []
     colList.map(p=>p.brand)
            .flat()
@@ -190,7 +190,7 @@ const renderBrands = ()=>{ //Según la sección, cargar dinámicamente las marca
             })
 
     brands.forEach(b=>brandsContainer.innerHTML += `
-        <button onclick="toggleFilter('brands','${b}', this)">${b}</button>
+        <button class="btn-blanco" onclick="toggleFilter('brands','${b}', this)">${b}</button>
     `)
 }
 

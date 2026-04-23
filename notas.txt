@@ -4,7 +4,7 @@
 
 - API con IA 
 
-- css filtros y ordenar por (en clase)
+- css ordenar por (en clase)
 - responsive
 - Separar js de index, search y collection
 - utilizar swiper para estilos

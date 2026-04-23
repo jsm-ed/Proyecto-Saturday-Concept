@@ -15,33 +15,56 @@
     <div class="filterPage">
       <div class="transparent"></div>
       <div class="filterMenu">
-        <div id="filterHeader">
-          <p>Filtros</p>
-          <button id="exitFilter" onclick="visibilityFilter('hidden')">
-            <i class="fa-solid fa-x"></i>
+        <div>
+          <div id="filterHeader">
+            <p>Filtros</p>
+            <button id="exitFilter" onclick="visibilityFilter('hidden')">
+              <i class="fa-solid fa-x"></i>
+            </button>
+          </div>
+          <div class="filterDetails">
+            <details id="disponibilidad">
+              <summary>DISPONIBILIDAD</summary>
+              <div class="grid-btns-blancos">
+                <button
+                  class="btn-blanco"
+                  onclick="toggleFilter('stock', 'in', this)"
+                >
+                  En existencia
+                </button>
+                <button
+                  class="btn-blanco"
+                  onclick="toggleFilter('stock', 'notIn', this)"
+                >
+                  Agotado
+                </button>
+              </div>
+            </details>
+            <details>
+              <summary>TALLA</summary>
+              <div class="grid-btns-blancos" id="talla"></div>
+            </details>
+            <details>
+              <summary>MARCA</summary>
+              <div class="grid-btns-blancos" id="marca"></div>
+            </details>
+            <details id="precio">
+              <summary>PRECIO</summary>
+              <div>
+                <input type="number" id="minPrice" placeholder="Min" /> -
+                <input type="number" id="maxPrice" placeholder="Max" />
+              </div>
+            </details>
+          </div>
+        </div>
+        <div class="applyFilterDiv">
+          <button
+            id="btn-aplicar-filtro"
+            onclick="(applyFilter(), visibilityFilter('hidden'))"
+          >
+            APPLY FILTER
           </button>
         </div>
-        <div>
-          <details id="disponibilidad">
-            <summary>DISPONIBILIDAD</summary>
-            <button onclick="toggleFilter('stock', 'in', this)">
-              En existencia
-            </button>
-            <button onclick="toggleFilter('stock', 'notIn', this)">
-              Agotado
-            </button>
-          </details>
-          <details id="talla"></details>
-          <details id="marca"></details>
-          <details id="precio">
-            <summary>PRECIO</summary>
-            <input type="number" id="minPrice" placeholder="Min" />
-            <input type="number" id="maxPrice" placeholder="Max" />
-          </details>
-        </div>
-        <button id="btn-aplicar-filtro" onclick="applyFilter()">
-          APPLY FILTER
-        </button>
       </div>
     </div>
     <!--HEADER-->
@@ -63,13 +86,12 @@
         <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
       </div>
     </header>
+    <!--NAV-->
     <!--Div para estructurar-->
     <div class="centrado">
       <nav>
         <div class="elementoNav">
-          <a href="/other/collection.html?collection=sneakers"
-            >Sneakers</a
-          >
+          <a href="/other/collection.html?collection=sneakers">Sneakers</a>
           <div class="submenu">
             <div>
               <h4>NIKE</h4>
@@ -108,14 +130,10 @@
           </div>
         </div>
         <div class="elementoNav">
-          <a href="/other/collection.html?collection=streetwear"
-            >Streetwear</a
-          >
+          <a href="/other/collection.html?collection=streetwear">Streetwear</a>
         </div>
         <div class="elementoNav">
-          <a href="/other/collection.html?collection=accesorios"
-            >Accesorios</a
-          >
+          <a href="/other/collection.html?collection=accesorios">Accesorios</a>
         </div>
         <div class="elementoNav">
           <a href="/other/collection.html?collection=new era">New Era</a>
