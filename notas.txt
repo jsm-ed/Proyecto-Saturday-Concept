@@ -1,4 +1,5 @@
-- Página dinámica de cada producto
+- cambiar stock por aviable o unavailable
+- js de Página dinámica de cada producto
 - Carrito
 - Página de pago y registro
 
