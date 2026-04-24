@@ -315,16 +315,17 @@ const renderProductPage = (productName)=>{
     const sizes = makeSizes()
     sizes.forEach(
         s=>{
-            disponibleSizes.includes(s) 
+            disponibleSizes.includes(s)
             ? sizesContainer.innerHTML +=`
                 <button class="btn-blanco">${s}</button>
               `
             : sizesContainer.innerHTML +=`
                 <button class="">${s}</button>
               `
-            
         }
     )
+    descriptionContainer.open = true
+    description.innerHTML = producto.description
 
     //Añadir description
 
