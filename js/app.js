@@ -302,6 +302,10 @@ const renderProductPage = (productName)=>{
     const description = document.querySelector("#description p")
     let producto = {}
     producto = productsList.find(p => p.name == productName)
+    const disponibleSizes = totalProductsList.filter(p=>p.name==producto.name)
+                                             .map(p=>p.size)
+    console.log(disponibleSizes)
+
     image.src = `/img/Productos/${producto.img}`
     productTitle.innerHTML = producto.name
     productPrice.innerHTML = `${producto.price}€`
@@ -310,9 +314,16 @@ const renderProductPage = (productName)=>{
     collection = producto.section
     const sizes = makeSizes()
     sizes.forEach(
-        s=>sizesContainer.innerHTML +=`
-            <button class="btn-blanco">${s}</button>
-        `
+        s=>{
+            disponibleSizes.includes(s) 
+            ? sizesContainer.innerHTML +=`
+                <button class="btn-blanco">${s}</button>
+              `
+            : sizesContainer.innerHTML +=`
+                <button class="">${s}</button>
+              `
+            
+        }
     )
 
     //Añadir description
