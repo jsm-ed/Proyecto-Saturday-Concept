@@ -1,17 +1,22 @@
 [
-    {"id":1, "name":"NWHR In Particular Hoodie", "price":85, "section":"streetwear", "brand":["NWHR"], "img":"particular-hoodie.png", "stock":1, "size":["S", "M", "XL"]},
-    {"id":2, "name":"NWHR Apacheta Hoodie", "price":82, "section":"streetwear", "brand":["NWHR"],"img":"apacheta-hoodie.png", "stock":0, "size":["S", "XL"]},
-    {"id":3, "name":"NWHR Bomb Tee", "price":49, "section":"streetwear", "brand":["NWHR"],"img":"bomb-tee.png", "stock":3, "size":["XL"]},
-    {"id":4, "name":"NWHR Spray White Tee", "price":49, "section":"streetwear", "brand":["NWHR"], "img":"spray-tee.png", "stock":1, "size":["XS", "M", "l", "XL"]},
+    {"id":1, "name":"NWHR In Particular Hoodie", "price":85, "section":"streetwear", "brand":["NWHR"], "img":"particular-hoodie.png", "stock":1, "size":"S"},
+    {"id":2, "name":"NWHR In Particular Hoodie", "price":85, "section":"streetwear", "brand":["NWHR"], "img":"particular-hoodie.png", "stock":2, "size":"M"},
+    {"id":3, "name":"NWHR In Particular Hoodie", "price":85, "section":"streetwear", "brand":["NWHR"], "img":"particular-hoodie.png", "stock":1, "size":"L"},
+    {"id":4, "name":"NWHR Apacheta Hoodie", "price":82, "section":"streetwear", "brand":["NWHR"],"img":"apacheta-hoodie.png", "stock":1, "size":"XL"},
+    {"id":5, "name":"NWHR Spray White Tee", "price":49, "section":"streetwear", "brand":["NWHR"], "img":"spray-tee.png", "stock":3, "size":"XS"},
+    {"id":6, "name":"NWHR Spray White Tee", "price":49, "section":"streetwear", "brand":["NWHR"], "img":"spray-tee.png", "stock":1, "size":"S"},
+    {"id":7, "name":"NWHR Bomb Tee", "price":49, "section":"streetwear", "brand":["NWHR"],"img":"bomb-tee.png", "stock":0, "size":[""]},
 
-    {"id":5, "name":"Corteiz Trucker Hat Black White", "price":95, "section":"accesorios", "brand":["Corteiz"], "img":"corteiz-hat.png", "stock":10, "size":["6 7/8", "7", "7 1/8", "7 1/4"]},
-
-    {"id":7, "name":"New Era 9FORTY LA Green", "price":32, "section":"new era", "brand":["New Era"], "img":"ne-la-green.png", "stock":7, "size":["7 1/8"]},
-    {"id":8, "name":"New Era 9FORTY NY Green Cream", "price":32, "section":"new era", "brand":["New Era"], "img":"ne-ny-greenCream.png", "stock":0, "size":["7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8", "22"]},
-    {"id":9, "name":"New Era 9FORTY NY Flowers", "price":32, "section":"new era", "brand":["New Era"], "img":"ne-ny-flowers.png", "stock":1, "size":["6 7/8", "7", "7 1/8", "7 1/4"]},
-    {"id":10 , "name":"New Era 9TWENTY NY", "price":32, "section":"new era", "brand":["New Era"], "img":"ne-ny-classic.png", "stock":2, "size":["6 7/8", "7", "7 1/8"]},
+    {"id":8, "name":"Corteiz Trucker Hat Black White", "price":95, "section":"accesorios", "brand":["Corteiz"], "img":"corteiz-hat.png", "stock":10, "size":"6 7/8"},
+    {"id":9, "name":"New Era 9FORTY LA Green", "price":32, "section":"new era", "brand":["New Era"], "img":"ne-la-green.png", "stock":7, "size":"7 1/8"},
+    {"id":10, "name":"New Era 9FORTY NY Green Cream", "price":32, "section":"new era", "brand":["New Era"], "img":"ne-ny-greenCream.png", "stock":0, "size":""},
+    {"id":11, "name":"New Era 9FORTY NY Flowers", "price":32, "section":"new era", "brand":["New Era"], "img":"ne-ny-flowers.png", "stock":1, "size": "7 1/4"},
+    {"id":12 , "name":"New Era 9TWENTY NY", "price":32, "section":"new era", "brand":["New Era"], "img":"ne-ny-classic.png", "stock":2, "size":"7 1/8"},
     
-    {"id":6, "name":"Louis Vuitton Ankle Boot Timberland Wheat", "price":4500, "section":"sneakers", "brand":["Louis Vuitton", "Timberland"], "img":"LV-Boot.png", "stock":0, "size":["40", "41", "45"]},
-    {"id":11 , "name":"SB Dunk Low RIOT", "price":320, "section":"sneakers", "brand":["Nike"], "img":"dunk-riot.png", "stock":5, "size":["40", "41", "42"]},
-    {"id":12 , "name":"Air Max 95 Corteiz Honey Black", "price":390, "section":"sneakers", "brand":["Nike", "Corteiz"], "img":"95-corteiz-honeyBlack.png", "stock":3, "size":["38", "45"]}
+    {"id":13, "name":"Louis Vuitton Ankle Boot Timberland Wheat", "price":4500, "section":"sneakers", "brand":["Louis Vuitton", "Timberland"], "img":"LV-Boot.png", "stock":0, "size":""},
+    {"id":14 , "name":"SB Dunk Low RIOT", "price":320, "section":"sneakers", "brand":["Nike"], "img":"dunk-riot.png", "stock":3, "size":"42"},
+    {"id":15 , "name":"SB Dunk Low RIOT", "price":320, "section":"sneakers", "brand":["Nike"], "img":"dunk-riot.png", "stock":1, "size":"41"},
+    {"id":16 , "name":"SB Dunk Low RIOT", "price":320, "section":"sneakers", "brand":["Nike"], "img":"dunk-riot.png", "stock":3, "size":"45"},
+    {"id":17 , "name":"Air Max 95 Corteiz Honey Black", "price":390, "section":"sneakers", "brand":["Nike", "Corteiz"], "img":"95-corteiz-honeyBlack.png", "stock":3, "size":"38"},
+    {"id":18 , "name":"Air Max 95 Corteiz Honey Black", "price":390, "section":"sneakers", "brand":["Nike", "Corteiz"], "img":"95-corteiz-honeyBlack.png", "stock":1, "size":"42"}
 ]

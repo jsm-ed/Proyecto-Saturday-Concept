@@ -15,6 +15,8 @@ const buscadorTag = document.querySelector("#buscador")
 const buscadorTag2 = document.querySelector("#buscador2")
 const busqueda = params.get("q")
 
+let totalProductsList = []
+let totalColList = []
 
 let productsList = []
 let colList = []
@@ -30,6 +32,18 @@ const getProducts = async () =>{
     const response = await fetch('/data/products.JSON')
     const data = await response.json()
     return data
+}
+
+const listDistinct = (lista)=>{
+    let used = []
+    let newList = []
+    lista.forEach(e=>{
+        if(!used.includes(e.name)){
+            used.push(e.name)
+            newList.push(e)
+        }
+    })
+    return newList
 }
 
 const renderProducts = (container, products) =>{ //Renderizar productos de una lista en un contenedor
@@ -87,9 +101,14 @@ const renderPage = (list, page)=>{ //Mostrar productos de una lista por páginas
 
 const renderCollection = (collection) => { //Mostrar productos collections
     const colTitle = document.querySelector("#colection h1")
-    collection == "accesorios" 
-        ? colList = productsList.filter(p => p.section==collection || p.section == "new era") 
-        : colList = productsList.filter(p => p.section==collection)
+    if(collection == "accesorios"){
+        colList = productsList.filter(p => p.section==collection || p.section == "new era") 
+        totalColList = totalProductsList.filter(p => p.section==collection || p.section == "new era") 
+    }else{
+        colList = productsList.filter(p => p.section==collection)
+        totalColList = totalProductsList.filter(p => p.section==collection)
+    }
+    console.log(totalColList)
     renderPage(colList, 1) 
     pagination(colList)
     
@@ -100,20 +119,21 @@ const renderCollection = (collection) => { //Mostrar productos collections
 }
 
 
-const buscar = (palabra) =>{ //Filtrar lista por nombre, seccion y marca
+const buscar = (palabra, lista) =>{ //Filtrar lista por nombre, seccion y marca
     palabraMayus = palabra.toUpperCase()
-    const searchedList = productsList.filter(p=>p.name.toUpperCase().includes(palabraMayus) || 
+    const searchedList = lista.filter(p=>p.name.toUpperCase().includes(palabraMayus) || 
         p.section.toUpperCase().includes(palabraMayus) || 
         p.brand.some(b => b.toUpperCase().includes(palabraMayus)))
     return searchedList
 }
 
 const renderBusqueda = ()=>{ //Mostrar resultado de búsqueda y añadir eventListener al segundo buscador
-    const resultado = buscar(busqueda)
+    const resultado = buscar(busqueda, productsList)
     colList = resultado
+    totalColList = buscar(busqueda, totalProductsList)
     buscadorTag.value=busqueda //Estético
     buscador2Event()
-    if(resultado.length < 1){
+    if(resultado.length == 0){
         const containerProducts = document.querySelector(".sectionProductos")
         containerProducts.innerHTML=`
             <p class="noEncontrado">No se encontraron resultados para "${busqueda}". Revisa la ortografía o usa una palabra o frase diferente.</p>
@@ -131,7 +151,7 @@ const renderBusqueda = ()=>{ //Mostrar resultado de búsqueda y añadir eventLis
 const buscadorEvent = () =>{ //Añadir eventlistener al input del header
     buscadorTag.addEventListener("keydown", function(e){
         if(e.key === "Enter"){
-            const texto = buscadorTag.value;
+            const texto = buscadorTag.value
             window.location.href = `/other/search.html?q=${texto}` 
         }
     })
@@ -142,7 +162,7 @@ const buscador2Event = ()=>{ //Detalles y listener input del main de la pagina s
         buscadorTag2.value=busqueda
         buscadorTag2.addEventListener("keydown", function(e){
             if(e.key === "Enter"){
-                const texto = buscadorTag2.value;
+                const texto = buscadorTag2.value
                 window.location.href = `/other/search.html?q=${texto}` 
             }
         })
@@ -155,7 +175,7 @@ const renderSizes = ()=>{ //Según la colección, cargar opciones de tallas
     sizesContainer.innerHTML = ""
     let sizes = []
     if (collection == "sneakers"){
-        sizes = ["37", "38", "39", "40", "41", "42", "43", "44", "45"]
+        sizes = ["37", "37.5", "38", "38.5", "39", "39.5", "39.5", "40", "40.5", "41", "41.5", "42", "42.5", "43", "43.5", "44", "45"]
     }else if(collection == "streetwear"){
         sizes = ["XS", "S", "M", "L", "XL"]
     }else if(collection == "accesorios"){
@@ -220,11 +240,23 @@ const applyFilter = ()=>{ //Aplicar filtro acumulativamente
     filteredList = colList
 
     if(filters.stock.includes("in") && !filters.stock.includes("notIn")){
-        filteredList = filteredList.filter(p=>p.stock > 0)
-    }else if(
-        filters.stock.includes("notIn") && !filters.stock.includes("in")){filteredList = filteredList.filter(p=>p.stock == 0)
+        filteredList = filteredList.filter(p =>
+            totalColList.some(tp =>
+            tp.name == p.name && tp.stock > 0)
+        )
+    }else if(filters.stock.includes("notIn") && !filters.stock.includes("in")){
+        filteredList = filteredList.filter(p =>
+            !totalColList.some(tp =>
+            tp.name == p.name && tp.stock > 0)
+        )
     }
-    if(filters.sizes.length > 0){filteredList = filteredList.filter(p=> p.size.some(s => filters.sizes.includes(s)))}
+    if(filters.sizes.length > 0){
+        filteredList = filteredList.filter(p =>
+            totalColList.some(product =>
+            product.name === p.name &&
+            filters.sizes.includes(product.size))
+        )
+    }
     if(filters.brands.length > 0){filteredList = filteredList.filter(p=> p.brand.some(b => filters.brands.includes(b)))}
     if(minPrice.value){filteredList = filteredList.filter(p=> p.price >= parseFloat(minPrice.value))}
     if(maxPrice.value){filteredList = filteredList.filter(p=> p.price <= parseFloat(maxPrice.value))}
@@ -254,7 +286,8 @@ const sortProducts = (sortValue)=>{
 
 //MAIN
 const init = async () =>{
-    productsList = await getProducts()
+    totalProductsList = await getProducts()
+    productsList = listDistinct(totalProductsList)
     renderIndexProducts() 
     
 

@@ -1,4 +1,4 @@
-- cambiar stock por aviable o unavailable
+- añadir no se encontraron productos filtrado
 - js de Página dinámica de cada producto
 - Carrito
 - Página de pago y registro
