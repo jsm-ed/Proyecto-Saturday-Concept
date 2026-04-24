@@ -467,6 +467,7 @@ a {
 
 details {
     width: 100%;
+    background-color: #ffffff;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     padding: 0 15px;
@@ -786,6 +787,7 @@ footer {
         flex-basis: 55%;
 
         img {
+            object-fit: contain;
             width: 100%;
         }
     }

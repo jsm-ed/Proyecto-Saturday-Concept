@@ -5,7 +5,7 @@ const productsContainers = document.querySelectorAll(".productos")
 
 //Variables collections
 const params = new URLSearchParams(window.location.search)
-const collection = params.get("collection")
+let collection = params.get("collection")
 const filterMenu = document.querySelector(".filterPage")
 const colNum = document.querySelector(".productsMenu p")
 
@@ -15,14 +15,19 @@ const buscadorTag = document.querySelector("#buscador")
 const buscadorTag2 = document.querySelector("#buscador2")
 const busqueda = params.get("q")
 
+//Página dinámica de cada producto
+const nombreProducto = params.get("p")
+
+//Listas
+    //Productos sin filtrar por talla
 let totalProductsList = []
-let totalColList = []
+let totalColList = [] //Sin filtrar pero únicamente los de la sección o búsqueda (para poder filtrar por talla y stock)
+    //Productos unicos
+let productsList = [] //Todos
+let colList = []      //Únicamente colección o búsqueda
+let filteredList = [] //Filtrados
 
-let productsList = []
-let colList = []
-let filteredList = []
-
-let filters = {
+let filters = { //JSON de filtros
     "stock":[],
     "sizes":[],
     "brands":[]
@@ -50,6 +55,7 @@ const renderProducts = (container, products) =>{ //Renderizar productos de una l
     container.innerHTML = ""
     products.forEach(product => {
         container.innerHTML+=`
+            <a href="/other/product.html?p=${product.name}">
             <article class="product">
                 <div class="contenedorOverflow">
                     <img src="/img/Productos/${product.img}"/>
@@ -59,6 +65,7 @@ const renderProducts = (container, products) =>{ //Renderizar productos de una l
                     <p class="precio">${product.price}€</p>
                 </div>
             </article>
+            </a>
         `
     })
 }
@@ -108,7 +115,6 @@ const renderCollection = (collection) => { //Mostrar productos collections
         colList = productsList.filter(p => p.section==collection)
         totalColList = totalProductsList.filter(p => p.section==collection)
     }
-    console.log(totalColList)
     renderPage(colList, 1) 
     pagination(colList)
     
@@ -170,10 +176,12 @@ const buscador2Event = ()=>{ //Detalles y listener input del main de la pagina s
 }
 
 //Filtros 
-const renderSizes = ()=>{ //Según la colección, cargar opciones de tallas
-    const sizesContainer = document.getElementById("talla") //No tiene carga dinámica porque pueden haber tallas que no estan disponibles
-    sizesContainer.innerHTML = ""
-    let sizes = []
+const makeSizes = ()=>{
+    let sizes = [
+        "37", "38", "39", "40", "41", "42", "43", "44", "45", "XS", "S", "M", "L", "XL","6 7/8", "7", 
+        "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8", "22", "23.5", "25", "27", "28", 
+        "36-40", "41-46", "6 7/8", "7", "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8"
+    ]
     if (collection == "sneakers"){
         sizes = ["37", "37.5", "38", "38.5", "39", "39.5", "39.5", "40", "40.5", "41", "41.5", "42", "42.5", "43", "43.5", "44", "45"]
     }else if(collection == "streetwear"){
@@ -184,13 +192,13 @@ const renderSizes = ()=>{ //Según la colección, cargar opciones de tallas
         ]
     }else if(collection == "new era"){
         sizes = ["6 7/8", "7", "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8"]
-    }else{
-        sizes = ["37", "38", "39", "40", "41", "42", "43", "44", "45", "XS", "S", "M", "L", "XL","6 7/8", "7", 
-            "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8", "22", "23.5", "25", "27", "28", 
-            "36-40", "41-46", "6 7/8", "7", "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8"
-        ]
     }
-
+    return sizes
+}
+const renderSizes = ()=>{ //Según la colección, cargar opciones de tallas
+    const sizesContainer = document.getElementById("talla") //No tiene carga dinámica porque pueden haber tallas que no estan disponibles
+    sizesContainer.innerHTML = ""
+    const sizes = makeSizes()
     sizes.forEach(s=> sizesContainer.innerHTML += `
         <button class="btn-blanco" onclick="toggleFilter('sizes', '${s}', this)">${s}</button>
     `
@@ -284,6 +292,33 @@ const sortProducts = (sortValue)=>{
     pagination(sortedList)
 }
 
+//Carga dinámica de products.html
+const renderProductPage = (productName)=>{
+    const image = document.querySelector(".productImage img")
+    const productTitle = document.querySelector(".productDescription h2")
+    const productPrice = document.querySelector(".productDescription h3")
+    const sizesContainer = document.querySelector(".grid-btns-blancos")
+    const descriptionContainer = document.getElementById("description")
+    const description = document.querySelector("#description p")
+    let producto = {}
+    producto = productsList.find(p => p.name == productName)
+    image.src = `/img/Productos/${producto.img}`
+    productTitle.innerHTML = producto.name
+    productPrice.innerHTML = `${producto.price}€`
+    
+    sizesContainer.innerHTML = ""
+    collection = producto.section
+    const sizes = makeSizes()
+    sizes.forEach(
+        s=>sizesContainer.innerHTML +=`
+            <button class="btn-blanco">${s}</button>
+        `
+    )
+
+    //Añadir description
+
+}
+
 //MAIN
 const init = async () =>{
     totalProductsList = await getProducts()
@@ -300,5 +335,7 @@ const init = async () =>{
         const sortTag = document.getElementById("ordenar")
         sortTag.addEventListener("change",()=>sortProducts(sortTag.value))
     }
+
+    if(nombreProducto){renderProductPage(nombreProducto)}
 }
 init()

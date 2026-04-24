@@ -1,3 +1,4 @@
+- Añadir description a json
 - añadir no se encontraron productos filtrado
 - js de Página dinámica de cada producto
 - Carrito
