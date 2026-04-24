@@ -294,17 +294,19 @@ const sortProducts = (sortValue)=>{
 
 //Carga dinámica de products.html
 const renderProductPage = (productName)=>{
+    
     const image = document.querySelector(".productImage img")
     const productTitle = document.querySelector(".productDescription h2")
     const productPrice = document.querySelector(".productDescription h3")
     const sizesContainer = document.querySelector(".grid-btns-blancos")
     const descriptionContainer = document.getElementById("description")
     const description = document.querySelector("#description p")
+
     let producto = {}
+
     producto = productsList.find(p => p.name == productName)
     const disponibleSizes = totalProductsList.filter(p=>p.name==producto.name)
                                              .map(p=>p.size)
-    console.log(disponibleSizes)
 
     image.src = `/img/Productos/${producto.img}`
     productTitle.innerHTML = producto.name
@@ -324,11 +326,22 @@ const renderProductPage = (productName)=>{
               `
         }
     )
+    takeProductSize(producto)
+
     descriptionContainer.open = true
     description.innerHTML = producto.description
+}
 
-    //Añadir description
-
+const takeProductSize = (product)=>{
+    const sizesButtons = document.querySelectorAll(".productDescription .grid-btns-blancos .btn-blanco")
+    let previousSizeButton
+    sizesButtons.forEach(b=>b.addEventListener("click",function(){
+        product = totalProductsList.find(p=>p.name == product.name && p.size == this.textContent)
+        console.log(product)
+        if(previousSizeButton){previousSizeButton.classList.remove("active")}
+        previousSizeButton = this
+        this.classList.add("active")
+    })) 
 }
 
 //MAIN
