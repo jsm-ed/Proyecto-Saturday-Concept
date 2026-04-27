@@ -380,8 +380,13 @@ const addToCartListener = ()=>{
 const init = async () =>{
     totalProductsList = await getProducts()
     productsList = listDistinct(totalProductsList)
-    renderIndexProducts() 
     
+    const cartItem = localStorage.getItem("cart")
+    if(cartItem){
+        cartList = JSON.parse(cartItem)
+    }    
+    
+    if(window.location.pathname=='/index.html'){renderIndexProducts()} 
 
     if (collection) {renderCollection(collection)}
 
