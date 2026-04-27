@@ -32,6 +32,9 @@ let filters = { //JSON de filtros
     "sizes":[],
     "brands":[]
 }
+
+let cartList = []
+let selectedProduct
 //Peticion fetch a JSON
 const getProducts = async () =>{
     const response = await fetch('/data/products.JSON')
@@ -56,15 +59,15 @@ const renderProducts = (container, products) =>{ //Renderizar productos de una l
     products.forEach(product => {
         container.innerHTML+=`
             <a href="/other/product.html?p=${product.name}">
-            <article class="product">
-                <div class="contenedorOverflow">
-                    <img src="/img/Productos/${product.img}"/>
-                </div>
-                <div class="contenidoProd">
-                    <p>${product.name}</p>
-                    <p class="precio">${product.price}€</p>
-                </div>
-            </article>
+                <article class="product">
+                    <div class="contenedorOverflow">
+                        <img src="/img/Productos/${product.img}"/>
+                    </div>
+                    <div class="contenidoProd">
+                        <p>${product.name}</p>
+                        <p class="precio">${product.price}€</p>
+                    </div>
+                </article>
             </a>
         `
     })
@@ -293,56 +296,85 @@ const sortProducts = (sortValue)=>{
 }
 
 //Carga dinámica de products.html
-const renderProductPage = (productName)=>{
+const renderProductPage = ()=>{
+    const productPage = document.querySelector(".productPage")
+    selectedProduct = productsList.find(p => p.name == nombreProducto)
     
-    const image = document.querySelector(".productImage img")
-    const productTitle = document.querySelector(".productDescription h2")
-    const productPrice = document.querySelector(".productDescription h3")
+    productPage.innerHTML = `
+        <div class="productImage">
+            <img src="/img/Productos/${selectedProduct.img}"/>
+        </div>        
+        <section class="productDescription">
+            <h2>${selectedProduct.name}</h2>
+            <h3>${selectedProduct.price}€</h3>
+            <h4>TALLA</h4>
+            <div class="grid-btns-blancos"></div>
+            <button class="btn-blanco" id="addToCart">Agregar al carrito</button>
+            <details id="description">
+                <summary>Descripción</summary>
+                <p>${selectedProduct.description}</p>
+            </details>
+            <details>
+                <summary>Envíos y Devoluciones</summary>
+                <p>
+                    Recibirás un email de confirmación en cuanto tu pedido sea
+                    enviado. Los plazos de entrega pueden variar dependiendo de la
+                    ubicación y pueden experimentar demoras en épocas de alta demanda,
+                    como promociones especiales, eventos comerciales o la temporada de
+                    fiestas.<br />
+                    <br />
+                    Si necesitas devolver tu compra, dispones de 14 días hábiles desde
+                    la recepción del pedido para realizarlo. Puedes obtener más
+                    información y revisar todos los detalles en nuestra sección de
+                    Ayuda.
+                </p>
+            </details>
+        </section>    
+    `;
+    
+    renderProductSizes()
+    addToCartListener()
+
+    const descriptionContainer = document.getElementById("description")  //Estético
+    descriptionContainer.open = true
+    
+}
+
+const renderProductSizes = ()=>{
     const sizesContainer = document.querySelector(".grid-btns-blancos")
-    const descriptionContainer = document.getElementById("description")
-    const description = document.querySelector("#description p")
-
-    let producto = {}
-
-    producto = productsList.find(p => p.name == productName)
-    const disponibleSizes = totalProductsList.filter(p=>p.name==producto.name)
+    collection = selectedProduct.section
+    const sizes = makeSizes()
+    const disponibleSizes = totalProductsList.filter(p=>p.name==selectedProduct.name)
                                              .map(p=>p.size)
 
-    image.src = `/img/Productos/${producto.img}`
-    productTitle.innerHTML = producto.name
-    productPrice.innerHTML = `${producto.price}€`
-    
-    sizesContainer.innerHTML = ""
-    collection = producto.section
-    const sizes = makeSizes()
-    sizes.forEach(
-        s=>{
-            disponibleSizes.includes(s)
-            ? sizesContainer.innerHTML +=`
-                <button class="btn-blanco">${s}</button>
-              `
-            : sizesContainer.innerHTML +=`
-                <button class="">${s}</button>
-              `
-        }
-    )
-    takeProductSize(producto)
-
-    descriptionContainer.open = true
-    description.innerHTML = producto.description
-}
-
-const takeProductSize = (product)=>{
-    const sizesButtons = document.querySelectorAll(".productDescription .grid-btns-blancos .btn-blanco")
     let previousSizeButton
-    sizesButtons.forEach(b=>b.addEventListener("click",function(){
-        product = totalProductsList.find(p=>p.name == product.name && p.size == this.textContent)
-        console.log(product)
-        if(previousSizeButton){previousSizeButton.classList.remove("active")}
-        previousSizeButton = this
-        this.classList.add("active")
-    })) 
+
+    sizesContainer.innerHTML = ""
+    sizes.forEach(s=>{
+        const sizeButton = document.createElement("button")
+        sizeButton.textContent  = s
+        if(disponibleSizes.includes(s)){
+            sizeButton.classList.add("btn-blanco")
+            sizeButton.addEventListener("click",function(){
+                    selectedProduct = totalProductsList.find(p=>p.name == selectedProduct.name && p.size == this.textContent)
+                    if(previousSizeButton){previousSizeButton.classList.remove("active")}
+                    previousSizeButton = this
+                    this.classList.add("active")
+                }
+            ) 
+        }
+        sizesContainer.appendChild(sizeButton)
+    })    
 }
+
+const addToCartListener = ()=>{
+    const cartBtn = document.getElementById("addToCart")
+    cartBtn.addEventListener("click",function(){
+        cartList.push(selectedProduct)
+        localStorage.setItem("cart", JSON.stringify(cartList))
+    })
+}
+ // ACABAR CARRITO
 
 //MAIN
 const init = async () =>{
@@ -361,6 +393,6 @@ const init = async () =>{
         sortTag.addEventListener("change",()=>sortProducts(sortTag.value))
     }
 
-    if(nombreProducto){renderProductPage(nombreProducto)}
+    if(nombreProducto){renderProductPage()}
 }
 init()
