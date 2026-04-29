@@ -119,26 +119,55 @@
     </div>
     <!--MAIN-->
     <main class="cartPage">
-        <h2>Tu carrito</h2>
-        <table>
-            <thead>
-                <tr>
-                    <td>PRODUCTO</td>
-                    <td>CANTIDAD</td>
-                    <td>TOTAL</td>
-                </tr>
-            </thead>
-            <tbody id="cart">
-                
-            </tbody>
-        </table>
+      <h2>Tu carrito</h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="productoHeader" colspan="2">PRODUCTO</th>
+            <th class="cantidadHeader">CANTIDAD</th>
+            <th class="total">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="cartListImg">
+              <img src="/img/Productos/dunk-riot.png" alt="" />
+            </td>
+
+            <td>
+              <div class="cartProductDetails">
+                <h3>SB Dunk Low RIOT</h3>
+                <p>€320,00</p>
+                <p>Size: 36.5</p>
+              </div>
+            </td>
+
+            <td>
+              <div class="quantity">
+                <button id="less"><i class="fa-solid fa-minus"></i></button>
+                <p>1</p>
+                <button id="more"><i class="fa-solid fa-plus"></i></button>
+              </div>
+            </td>
+
+            <td class="total">€320,00</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div id="endCart">
         <div>
-            <div>
-                <h3>Total estimado</h3>
-                <p>€€€€€</p>
-            </div>
-            <button>Pagar pedido</button>
+          <div id="totalCart">
+            <h3>Total estimado</h3>
+            <p>€390,00 EUR</p>
+          </div>
+          <p>
+            Impuestos incluidos. Descuentos y envío calculados <br />en la
+            pantalla de pago.
+          </p>
+          <button>Pagar pedido</button>
         </div>
+      </div>
     </main>
     <!--FOOTER-->
     <footer>

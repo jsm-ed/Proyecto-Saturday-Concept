@@ -835,3 +835,110 @@ footer {
         }
     }
 }
+
+.cartPage{
+    padding: 4%;
+    h2{
+        font-size: 3rem;
+        font-weight: 600;
+        margin-bottom: 25px;
+    }
+    table{
+        width: 100%;
+        margin-bottom: 5%;
+        gap: 20px;
+
+        th{
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: #707070;
+            text-align: start;
+        }
+        .productoHeader{
+            width: 55%;
+        }
+        .cantidadHeader{
+            padding-left: 40px;
+        }
+        .total{
+            text-align: end;
+        }
+        #cartListImg{
+            padding-left: 0;
+            height: 27vh;
+            width: 0%;
+            img{
+                height: 100%;
+            }
+        }
+        td{
+            padding-top: 40px;
+            padding-left: 40px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .cartProductDetails{
+            p{
+                margin-top: 10px;
+               font-size: 0.85rem; 
+               color: #000000bc;
+            }
+        }
+        .quantity{
+            display: flex;
+            border: 1.35px solid black;
+            border-radius: 10px;
+            width: fit-content;
+            button{
+                border: none;
+                background-color: transparent;
+                cursor: pointer;
+                padding: 13px 17px;
+                color: #0000006e;
+            }
+            p{
+                padding: 13px 20px;
+            }
+        }
+        
+
+    }
+    #endCart{
+        display: flex;
+        justify-content: end;
+        text-align: end;
+        #totalCart{
+            display: flex;
+            justify-content: end;
+            align-items: start;
+            gap: 5%;
+            h3{
+                font-size: 1.25rem;
+            }
+            P{
+                font-size: 1.15rem;
+                color: #000000ba;
+            }
+        }
+        p{
+            font-size: 0.85rem;
+            color: #000000ba;
+            margin-bottom: 25px;
+        }
+        button{
+            padding: 13px 0;
+            width: 100%;
+            background-color: #000000;
+            color: #ffffff;
+            border-radius: var(--radioBorde);
+            border: none;
+            font-family: Inter;
+            font-size: 1rem;
+            transition: 0.2s;
+            cursor: pointer;
+            &:hover{
+                box-shadow: 0 0 0 0.8px #000000;
+            }
+        }
+    }
+}

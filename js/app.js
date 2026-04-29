@@ -374,7 +374,17 @@ const addToCartListener = ()=>{
         localStorage.setItem("cart", JSON.stringify(cartList))
     })
 }
- // ACABAR CARRITO
+
+const renderCartList = ()=>{
+    const cartItemsContainer = document.getElementById("cartItems")
+    console.log(cartItemsContainer)
+    cartItemsContainer.innerHTML = ""
+    cartList.forEach(i=>cartItemsContainer.innerHTML += `
+       <tr>
+            <
+       </tr>
+    `)
+}
 
 //MAIN
 const init = async () =>{
@@ -399,5 +409,6 @@ const init = async () =>{
     }
 
     if(nombreProducto){renderProductPage()}
+
 }
 init()
