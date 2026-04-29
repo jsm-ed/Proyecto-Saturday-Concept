@@ -1,4 +1,5 @@
 const numProdPagina = 4*6
+const notification = document.querySelector(".notification")
 
 // Variables Index
 const productsContainers = document.querySelectorAll(".productos")
@@ -309,6 +310,7 @@ const renderProductPage = ()=>{
             <h3>${selectedProduct.price}€</h3>
             <h4>TALLA</h4>
             <div class="grid-btns-blancos"></div>
+            <p class="noMoreStock"></p>
             <button class="btn-blanco" id="addToCart">Agregar al carrito</button>
             <details id="description">
                 <summary>Descripción</summary>
@@ -333,7 +335,7 @@ const renderProductPage = ()=>{
     `;
     
     renderProductSizes()
-    addToCartListener()
+    if(selectedProduct.stock>0){addToCartListener()}
 
     const descriptionContainer = document.getElementById("description")  //Estético
     descriptionContainer.open = true
@@ -369,28 +371,101 @@ const renderProductSizes = ()=>{
 
 const addToCartListener = ()=>{
     const cartBtn = document.getElementById("addToCart")
+    const noMoreStockTag = document.querySelector(".noMoreStock")
     cartBtn.addEventListener("click",function(){
-        cartList.push(selectedProduct)
-        localStorage.setItem("cart", JSON.stringify(cartList))
+        let cartProductIndex = cartList.findIndex(p => p.id === selectedProduct.id)
+        noMoreStockTag.innerHTML=""
+
+        if(cartProductIndex==-1){
+            cartList.push({...selectedProduct, quantity:1})
+            notification.style.visibility = "visible"
+        }else{
+            if(cartList[cartProductIndex].stock>=cartList[cartProductIndex].quantity+1){
+                cartList[cartProductIndex].quantity += 1
+                notification.style.visibility = "visible"
+            }else{
+                noMoreStockTag.innerHTML='<i class="fa-solid fa-circle-exclamation"></i> Tu carrito ya tiene la cantidad máxima de este artículo.'
+            }
+        }
+        localStorage.setItem("cart", JSON.stringify(cartList))  
     })
 }
 
+
 const renderCartList = ()=>{
+    if(cartList.length==0){notification.style.visibility = "hidden"}
     const cartItemsContainer = document.getElementById("cartItems")
-    console.log(cartItemsContainer)
     cartItemsContainer.innerHTML = ""
-    cartList.forEach(i=>cartItemsContainer.innerHTML += `
-       <tr>
-            <
-       </tr>
-    `)
+    cartList.forEach(i=>{
+        let cartProductIndex = cartList.findIndex(p => p.id === i.id)
+        cartItemsContainer.innerHTML += `
+            <tr>
+                <td id="cartListImg">
+                  <img src="/img/Productos/${i.img}"/>
+                </td>
+
+                <td>
+                  <div class="cartProductDetails">
+                    <h3>${i.name}</h3>
+                    <p>€${i.price.toFixed(2).replace('.', ',')}</p>
+                    <p>Size: ${i.size}</p>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="quantity">
+                    <button onclick="changeQuantity(${cartProductIndex}, '-')" id="less"><i class="fa-solid fa-minus"></i></button>
+                    <p>${i.quantity}</p>
+                    <button onclick="changeQuantity(${cartProductIndex}, '+') "id="more"><i class="fa-solid fa-plus"></i></button>
+                  </div>
+                  <p class="noMoreStock"></p>
+                </td>
+
+                <td class="total">€${(i.price*i.quantity).toFixed(2).replace('.', ',')}</td>
+            </tr>
+        `
+    })
+    renderTotalCart()
 }
 
+const renderTotalCart = ()=>{
+    const totalCartTag = document.querySelector("#totalCart p")
+    let totalCart = cartList.reduce((acc, i)=>{
+        return acc + (i.price * i.quantity)
+    }, 0)
+    totalCartTag.innerHTML=`€${totalCart.toFixed(2).replace('.', ',')}EUR`
+}
+
+const changeQuantity = (productIndex, operation)=>{
+    const quantityContainers = document.querySelectorAll(".quantity p")
+    const totalContainers = document.querySelectorAll(".total")
+    const noMoreStockTag = document.querySelectorAll(".noMoreStock")
+    noMoreStockTag[productIndex].innerHTML=""
+
+    if(operation=="+"){
+        cartList[productIndex].stock>=cartList[productIndex].quantity+1
+        ? cartList[productIndex].quantity += 1
+        : noMoreStockTag[productIndex].innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Tu carrito ya tiene la cantidad máxima de este artículo.'
+        
+    }else if(operation=="-" && cartList[productIndex].quantity-1 >= 0){
+        cartList[productIndex].quantity -= 1
+    }
+    if(cartList[productIndex].quantity == 0){
+        cartList.splice(productIndex,1)
+        localStorage.setItem("cart", JSON.stringify(cartList))    
+        renderCartList()
+    }else{
+        localStorage.setItem("cart", JSON.stringify(cartList))    
+        quantityContainers[productIndex].innerHTML = cartList[productIndex].quantity
+        totalContainers[productIndex+1].innerHTML = `€${(cartList[productIndex].price*cartList[productIndex].quantity).toFixed(2).replace('.', ',')}`
+        renderTotalCart()
+    }
+}
 //MAIN
 const init = async () =>{
     totalProductsList = await getProducts()
     productsList = listDistinct(totalProductsList)
-    
+    notification.style.visibility = "hidden"
     const cartItem = localStorage.getItem("cart")
     if(cartItem){
         cartList = JSON.parse(cartItem)
@@ -409,6 +484,11 @@ const init = async () =>{
     }
 
     if(nombreProducto){renderProductPage()}
-
+    if(cartList.length>0){
+        notification.style.visibility = "visible"
+        if(window.location.pathname=='/other/cart.html'){
+            renderCartList()
+        }
+    }
 }
 init()

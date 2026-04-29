@@ -501,6 +501,30 @@ details {
     }
 }
 
+.noMoreStock{
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+    color: #000000c3;
+    i{
+        color: rgb(228, 0, 0);
+        margin-right: 3px
+    }
+}
+
+.cartHeader{
+    position: relative;
+    .notification{
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+        background-color: #000000;
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        visibility: hidden;
+    }
+}
+
 /*HEADER*/
 header {
     display: flex;
@@ -832,6 +856,11 @@ footer {
 
         &:hover {
             box-shadow: 0 0 0 2.5px black;
+        }
+        &:active{
+            transition: 0;
+            background-color: #000000;
+            color: #ffffff;
         }
     }
 }

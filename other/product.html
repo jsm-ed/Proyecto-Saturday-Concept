@@ -8,39 +8,6 @@
     <script defer src="/js/app.js"></script>
   </head>
   <body>
-    <!--Menu filtrado-->
-    <div class="filterPage">
-      <div class="transparent"></div>
-      <div class="filterMenu">
-        <div id="filterHeader">
-          <p>Filtros</p>
-          <button id="exitFilter" onclick="visibilityFilter('hidden')">
-            <i class="fa-solid fa-x"></i>
-          </button>
-        </div>
-        <div>
-          <details id="disponibilidad">
-            <summary>DISPONIBILIDAD</summary>
-            <button onclick="toggleFilter('stock', 'in', this)">
-              En existencia
-            </button>
-            <button onclick="toggleFilter('stock', 'notIn', this)">
-              Agotado
-            </button>
-          </details>
-          <details id="talla"></details>
-          <details id="marca"></details>
-          <details id="precio">
-            <summary>PRECIO</summary>
-            <input type="number" id="minPrice" placeholder="Min" />
-            <input type="number" id="maxPrice" placeholder="Max" />
-          </details>
-        </div>
-        <button id="btn-aplicar-filtro" onclick="applyFilter()">
-          APPLY FILTER
-        </button>
-      </div>
-    </div>
     <!--HEADER-->
     <header>
       <!--divs de separación para estructura-->
@@ -58,7 +25,7 @@
         <select name="pais" id="pais">
           <option value="">España (EUR)</option>
         </select>
-        <a href="/other/cart.html"><i class="fa-solid fa-cart-shopping"></i></a>
+        <a class="cartHeader" href="/other/cart.html"><i class="fa-solid fa-cart-shopping"></i><div class="notification"></div></a>
       </div>
     </header>
     <!--NAV-->

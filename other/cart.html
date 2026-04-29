@@ -58,7 +58,7 @@
         <select name="pais" id="pais">
           <option value="">España (EUR)</option>
         </select>
-        <a href=""><i class="fa-solid fa-cart-shopping"></i></a>
+        <a class="cartHeader" href="/other/cart.html"><i class="fa-solid fa-cart-shopping"></i><div class="notification"></div></a>
       </div>
     </header>
     <!--NAV-->
@@ -128,30 +128,7 @@
             <th class="total">TOTAL</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td id="cartListImg">
-              <img src="/img/Productos/dunk-riot.png" alt="" />
-            </td>
-
-            <td>
-              <div class="cartProductDetails">
-                <h3>SB Dunk Low RIOT</h3>
-                <p>€320,00</p>
-                <p>Size: 36.5</p>
-              </div>
-            </td>
-
-            <td>
-              <div class="quantity">
-                <button id="less"><i class="fa-solid fa-minus"></i></button>
-                <p>1</p>
-                <button id="more"><i class="fa-solid fa-plus"></i></button>
-              </div>
-            </td>
-
-            <td class="total">€320,00</td>
-          </tr>
+        <tbody id="cartItems">
         </tbody>
       </table>
 
@@ -159,7 +136,7 @@
         <div>
           <div id="totalCart">
             <h3>Total estimado</h3>
-            <p>€390,00 EUR</p>
+            <p></p>
           </div>
           <p>
             Impuestos incluidos. Descuentos y envío calculados <br />en la
