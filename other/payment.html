@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proyecto Juan Sastre Montero LLMM</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <header class="paymentPageHeader">
+      <a href="/index.html"><h1>Saturday Concept</h1></a>
+      <i class="fa-solid fa-bag-shopping"></i>
+    </header>
+    <main class="paymentPage">
+      <div class="paymentMenu">
+        <h2>Contacto</h2>
+        <input
+          class="buscador"
+          type="text"
+          placeholder="Email o numero de teléfono móvil"
+        />
+
+        <h2>Entrega</h2>
+        <form action="">
+          <select class="buscador" id="pais">
+            <option value="" disabled selected hidden>
+              Selecciona un país
+            </option>
+            <option value="ES">España</option>
+            <option value="AT">Austria</option>
+            <option value="BE">Bélgica</option>
+            <option value="BG">Bulgaria</option>
+            <option value="DE">Alemania</option>
+            <option value="CZ">Chequia</option>
+            <option value="CY">Chipre</option>
+            <option value="HR">Croacia</option>
+            <option value="DK">Dinamarca</option>
+            <option value="SK">Eslovaquia</option>
+            <option value="SI">Eslovenia</option>
+            <option value="EE">Estonia</option>
+            <option value="FI">Finlandia</option>
+            <option value="FR">Francia</option>
+            <option value="GR">Grecia</option>
+            <option value="HU">Hungría</option>
+            <option value="IE">Irlanda</option>
+            <option value="IT">Italia</option>
+            <option value="LV">Letonia</option>
+            <option value="LT">Lituania</option>
+            <option value="LU">Luxemburgo</option>
+            <option value="MT">Malta</option>
+            <option value="NL">Países Bajos</option>
+            <option value="Pt">Polonia</option>
+            <option value="PL">Portugal</option>
+            <option value="RO">Rumania</option>
+            <option value="SE">Suecia</option>
+          </select>
+          <div>
+            <input class="buscador" type="text" placeholder="Nombre" />
+            <input class="buscador" type="text" placeholder="Apellidos" />
+          </div>
+          <input class="buscador" type="text" placeholder="Dirección" />
+          <input
+            class="buscador"
+            type="text"
+            placeholder="Casa, apartamento, etc"
+          />
+          <div>
+            <input class="buscador" type="text" placeholder="Ciudad" />
+            <input class="buscador" type="text" placeholder="Codigo postal" />
+          </div>
+        </form>
+        <button class="blue-btn" id="pay-btn">Pagar ahora</button>
+      </div>
+      <div class="cartProducts">
+        <table>
+          <tr>
+            <td>
+              <div id="cartListImg">
+                <div class="notification">1</div>
+                <img src="/img/Productos/95-corteiz-honeyBlack.png" />
+              </div>
+            </td>
+            <td class="productDetails">
+              <div>
+                <h3>Air Max 95 Corteiz Honey Black</h3>
+                <p>42</p>
+              </div>
+            </td>
+            <td class="total">320,00 €</td>
+          </tr>
+        </table>
+        <div id="discount">
+          <input
+            class="buscador"
+            type="text"
+            placeholder="Código de descuento o tarjeta de regalo"
+          />
+          <button class="blue-btn">Aplicar</button>
+        </div>
+        <div class="separated">
+          <p id="subtotal">Subtotal · 2 artículos</p>
+          <p id="subtotalPrice">640,00 €</p>
+        </div>
+        <p id="subtotalDiscount"></p>
+        <div class="separated" id="totalPrice">
+          <h4>Total</h4>
+          <h4>640,00 €</h4>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

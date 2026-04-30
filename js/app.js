@@ -391,44 +391,54 @@ const addToCartListener = ()=>{
     })
 }
 
-
-const renderCartList = ()=>{
-    if(cartList.length==0){notification.style.visibility = "hidden"}
-    const cartItemsContainer = document.getElementById("cartItems")
-    cartItemsContainer.innerHTML = ""
-    cartList.forEach(i=>{
-        let cartProductIndex = cartList.findIndex(p => p.id === i.id)
-        cartItemsContainer.innerHTML += `
-            <tr>
-                <td id="cartListImg">
-                  <img src="/img/Productos/${i.img}"/>
-                </td>
-
-                <td>
-                  <div class="cartProductDetails">
-                    <h3>${i.name}</h3>
-                    <p>€${i.price.toFixed(2).replace('.', ',')}</p>
-                    <p>Size: ${i.size}</p>
-                  </div>
-                </td>
-
-                <td>
-                  <div class="quantity">
-                    <button onclick="changeQuantity(${cartProductIndex}, '-')" id="less"><i class="fa-solid fa-minus"></i></button>
-                    <p>${i.quantity}</p>
-                    <button onclick="changeQuantity(${cartProductIndex}, '+') "id="more"><i class="fa-solid fa-plus"></i></button>
-                  </div>
-                  <p class="noMoreStock"></p>
-                </td>
-
-                <td class="total">€${(i.price*i.quantity).toFixed(2).replace('.', ',')}</td>
-            </tr>
-        `
-    })
-    renderTotalCart()
+//Página carrito
+const renderCartList = ()=>{ //Cargar elementos de la página
+    const cartPage = document.querySelector(".cartPage")
+    if(cartList.length==0){
+        notification.style.visibility = "hidden"
+        cartPage.innerHTML = `
+            <h1 class="centrado" style="font-size: 3.25rem; font-weight: 600; margin: 5% 0 3% 0;">Tu carrito esta vacío</h1>
+            <a href="/index.html" class="centrado">
+                <button class="pagarPedido" style="width: 18%">Seguir comprando</button>
+            </a>
+            `
+    }else{
+        const cartItemsContainer = document.getElementById("cartItems")
+        cartItemsContainer.innerHTML = ""
+        cartList.forEach(i=>{
+            let cartProductIndex = cartList.findIndex(p => p.id === i.id)
+            cartItemsContainer.innerHTML += `
+                <tr>
+                    <td id="cartListImg">
+                      <img src="/img/Productos/${i.img}"/>
+                    </td>
+    
+                    <td>
+                      <div class="cartProductDetails">
+                        <h3>${i.name}</h3>
+                        <p>€${i.price.toFixed(2).replace('.', ',')}</p>
+                        <p>Size: ${i.size}</p>
+                      </div>
+                    </td>
+    
+                    <td>
+                      <div class="quantity">
+                        <button onclick="changeQuantity(${cartProductIndex}, '-')" id="less"><i class="fa-solid fa-minus"></i></button>
+                        <p>${i.quantity}</p>
+                        <button onclick="changeQuantity(${cartProductIndex}, '+') "id="more"><i class="fa-solid fa-plus"></i></button>
+                      </div>
+                      <p class="noMoreStock"></p>
+                    </td>
+    
+                    <td class="total">€${(i.price*i.quantity).toFixed(2).replace('.', ',')}</td>
+                </tr>
+            `
+        })
+        renderTotalCart()
+    }
 }
 
-const renderTotalCart = ()=>{
+const renderTotalCart = ()=>{ //Cargar total estimado
     const totalCartTag = document.querySelector("#totalCart p")
     let totalCart = cartList.reduce((acc, i)=>{
         return acc + (i.price * i.quantity)
@@ -436,7 +446,7 @@ const renderTotalCart = ()=>{
     totalCartTag.innerHTML=`€${totalCart.toFixed(2).replace('.', ',')}EUR`
 }
 
-const changeQuantity = (productIndex, operation)=>{
+const changeQuantity = (productIndex, operation)=>{ //Cambiar la cantidad de cada producto
     const quantityContainers = document.querySelectorAll(".quantity p")
     const totalContainers = document.querySelectorAll(".total")
     const noMoreStockTag = document.querySelectorAll(".noMoreStock")
@@ -484,11 +494,12 @@ const init = async () =>{
     }
 
     if(nombreProducto){renderProductPage()}
+
     if(cartList.length>0){
         notification.style.visibility = "visible"
-        if(window.location.pathname=='/other/cart.html'){
-            renderCartList()
-        }
+    }
+    if(window.location.pathname=='/other/cart.html'){
+        renderCartList()
     }
 }
 init()
