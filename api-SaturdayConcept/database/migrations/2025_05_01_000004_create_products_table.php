@@ -1,0 +1,31 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->decimal('price', 10, 2);
+            $table->string('img')->nullable();
+            $table->text('description')->nullable();
+            $table->string('section_name');
+            $table->string('size_name')->nullable();
+            $table->integer('stock')->default(0);
+            $table->timestamps();
+
+            $table->foreign('section_name')->references('name')->on('sections')->onDelete('cascade');
+            $table->foreign('size_name')->references('name')->on('sizes')->onDelete('set null');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('products');
+    }
+};
