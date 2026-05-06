@@ -1,0 +1,601 @@
+const numProdPagina = 8
+let notification
+
+// Variables Index
+const productsContainers = document.querySelectorAll(".productos")
+
+//Variables collections
+const params = new URLSearchParams(window.location.search)
+let collection = params.get("collection")
+const filterMenu = document.querySelector(".filterPage")
+const colNum = document.querySelector(".productsMenu p")
+
+
+//Variables searcher
+const buscadorTag = document.querySelector("#buscador")
+const buscadorTag2 = document.querySelector("#buscador2")
+const busqueda = params.get("q")
+
+//Página dinámica de cada producto
+const nombreProducto = params.get("p")
+
+//Listas
+    //Productos sin filtrar por talla
+let totalProductsList = []
+let totalColList = [] //Sin filtrar pero únicamente los de la sección o búsqueda (para poder filtrar por talla y stock)
+    //Productos unicos
+let productsList = [] //Todos
+let colList = []      //Únicamente colección o búsqueda
+let filteredList = [] //Filtrados
+
+let filters = { //JSON de filtros
+    "stock":[],
+    "sizes":[],
+    "brands":[]
+}
+
+let cartList = []
+let selectedProduct
+
+const discountsList = [
+    {name:"JUAN", pct:10},
+    {name:"SASTRE", pct:15},
+    {name:"MONTERO", pct:20}
+]
+//Peticion fetch a JSON
+const getProducts = async () =>{
+    const response = await fetch('http://127.0.0.1:8000/api/products')
+    const data = await response.json()
+    return data
+}
+
+const listDistinct = (lista)=>{
+    let used = []
+    let newList = []
+    lista.forEach(e=>{
+        if(!used.includes(e.name)){
+            used.push(e.name)
+            newList.push(e)
+        }
+    })
+    return newList
+}
+
+const renderProducts = (container, products) =>{ //Renderizar productos de una lista en un contenedor
+    container.innerHTML = ""
+    products.forEach(product => {
+        container.innerHTML+=`
+            <a href="/web-SaturdayConcept/other/product.html?p=${product.name}">
+                <article class="product">
+                    <div class="contenedorOverflow">
+                        <img src="/web-SaturdayConcept/img/Productos/${product.img}"/>
+                    </div>
+                    <div class="contenidoProd">
+                        <p>${product.name}</p>
+                        <p class="precio">${product.price}€</p>
+                    </div>
+                </article>
+            </a>
+        `
+    })
+}
+
+
+const renderIndexProducts = ()=>{ //Mostrar productos página index
+    productsContainers.forEach(c=> {
+        if (c.dataset.section === "novedades"){
+            const newList = productsList.slice(-4)
+            renderProducts(c, newList)
+        } else if (c.dataset.section === "streetwear"){
+            const newList = productsList.filter(p=> p.section==="streetwear")
+                                  .slice(0,4)
+            renderProducts(c, newList)
+        }
+    })
+}
+
+//Empaginado
+const pagination = (list)=>{ //Añadir numeros de cambio de página en función de una lista
+    const btnsPags = document.querySelector(".paginas")
+    btnsPags.innerHTML=""
+    for (let i = 1; i <= Math.ceil(list.length / numProdPagina); i++) {
+        const btn = document.createElement("button")
+        btn.textContent = i
+        btn.addEventListener("click", () => {
+            renderPage(list, i)
+        })
+        btnsPags.appendChild(btn)
+    }
+}
+
+const renderPage = (list, page)=>{ //Mostrar productos de una lista por páginas 
+    let primerProdMostrado = (page - 1) * numProdPagina
+    let ultimoProdMostrado = primerProdMostrado + numProdPagina
+    const pagina = list.slice(primerProdMostrado, ultimoProdMostrado)
+    renderProducts(productsContainers[0], pagina)
+}
+
+
+const renderCollection = (collection) => { //Mostrar productos collections
+    const colTitle = document.querySelector("#colection h1")
+    if(collection == "accesorios"){
+        colList = productsList.filter(p => p.section==collection || p.section == "new era") 
+        totalColList = totalProductsList.filter(p => p.section==collection || p.section == "new era") 
+    }else{
+        colList = productsList.filter(p => p.section==collection || p.name.toLowerCase().includes(collection))
+        totalColList = totalProductsList.filter(p => p.section==collection || p.name.toLowerCase().includes(collection))        
+    }
+    renderPage(colList, 1) 
+    pagination(colList)
+    
+    colTitle.innerHTML = collection.toUpperCase()
+    colNum.innerHTML = `${colList.length} productos`
+    renderSizes()
+    renderBrands()
+}
+
+
+const buscar = (palabra, lista) =>{ //Filtrar lista por nombre, seccion y marca
+    palabraMayus = palabra.toUpperCase()
+    const searchedList = lista.filter(p=>p.name.toUpperCase().includes(palabraMayus) || 
+        p.section.toUpperCase().includes(palabraMayus) || 
+        p.brand.some(b => b.toUpperCase().includes(palabraMayus)))
+    return searchedList
+}
+
+const renderBusqueda = ()=>{ //Mostrar resultado de búsqueda y añadir eventListener al segundo buscador
+    const resultado = buscar(busqueda, productsList)
+    colList = resultado
+    totalColList = buscar(busqueda, totalProductsList)
+    buscadorTag.value=busqueda //Estético
+    buscador2Event()
+    if(resultado.length == 0){
+        const containerProducts = document.querySelector(".sectionProductos")
+        containerProducts.innerHTML=`
+            <p class="noEncontrado">No se encontraron resultados para "${busqueda}". Revisa la ortografía o usa una palabra o frase diferente.</p>
+            `
+    }
+    else{
+        renderPage(colList, 1)
+        pagination(colList)
+    }  
+    colNum.innerHTML = `${colList.length} productos`
+    renderSizes()
+    renderBrands()
+}
+
+const buscadorEvent = () =>{ //Añadir eventlistener al input del header
+    buscadorTag.addEventListener("keydown", function(e){
+        if(e.key === "Enter"){
+            const texto = buscadorTag.value
+            window.location.href = `/web-SaturdayConcept/other/search.html?q=${texto}` 
+        }
+    })
+}
+
+const buscador2Event = ()=>{ //Detalles y listener input del main de la pagina search
+    if(buscadorTag2){
+        buscadorTag2.value=busqueda
+        buscadorTag2.addEventListener("keydown", function(e){
+            if(e.key === "Enter"){
+                const texto = buscadorTag2.value
+                window.location.href = `/web-SaturdayConcept/other/search.html?q=${texto}` 
+            }
+        })
+    }
+}
+
+//Filtros 
+const makeSizes = ()=>{
+    let sizes = [
+        "37", "38", "39", "40", "41", "42", "43", "44", "45", "XS", "S", "M", "L", "XL","6 7/8", "7", 
+        "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8", "22", "23.5", "25", "27", "28", 
+        "36-40", "41-46", "6 7/8", "7", "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8"
+    ]
+    if (collection == "sneakers"){
+        sizes = ["37", "37.5", "38", "38.5", "39", "39.5", "39.5", "40", "40.5", "41", "41.5", "42", "42.5", "43", "43.5", "44", "45"]
+    }else if(collection == "streetwear"){
+        sizes = ["XS", "S", "M", "L", "XL"]
+    }else if(collection == "accesorios"){
+        sizes = ["6 7/8", "7", "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8", "22", "23.5", 
+            "25", "27", "28", "36-40", "41-46"
+        ]
+    }else if(collection == "new era"){
+        sizes = ["6 7/8", "7", "7 1/8", "7 1/4", "7 3/8", "7 1/2", "7 5/8", "7 3/4", "7 7/8", "8"]
+    }
+    return sizes
+}
+const renderSizes = ()=>{ //Según la colección, cargar opciones de tallas
+    const sizesContainer = document.getElementById("talla") //No tiene carga dinámica porque pueden haber tallas que no estan disponibles
+    sizesContainer.innerHTML = ""
+    const sizes = makeSizes()
+    sizes.forEach(s=> sizesContainer.innerHTML += `
+        <button class="btn-blanco" onclick="toggleFilter('sizes', '${s}', this)">${s}</button>
+    `
+    )
+}
+
+const renderBrands = ()=>{ //Según la sección, cargar dinámicamente las marcas
+    const brandsContainer = document.getElementById("marca")
+    brandsContainer.innerHTML = ""
+    let brands = []
+    colList.map(p=>p.brand)
+           .flat()
+           .forEach(b=>{
+                if(!brands.includes(b)){
+                    brands.push(b)
+                }
+            })
+
+    brands.forEach(b=>brandsContainer.innerHTML += `
+        <button class="btn-blanco" onclick="toggleFilter('brands','${b}', this)">${b}</button>
+    `)
+}
+
+const visibilityFilter = (visibilidad)=>{ //Declarada en un onclick del boton btn-filtrar
+    filterMenu.style.visibility = visibilidad  //Mostrar o ocultar menu de filtrado y bloquear o no el scroll mediante el overflow
+    const body = document.querySelector("body")
+    if(visibilidad=="visible"){
+        body.style.overflow = "hidden"
+    }else if(visibilidad=="hidden"){
+        body.style.overflow = "auto"
+    }
+}
+
+const toggleFilter = (type, value, elemento) => { //Añadir/borrar elemento de filtrado a la lista de filtros
+    const list = filters[type]
+    const index = list.indexOf(value)
+
+    index == -1 ? list.push(value) : list.splice(index, 1) 
+    elemento.classList.toggle("active")
+}
+
+
+const applyFilter = ()=>{ //Aplicar filtro acumulativamente
+    const minPrice = document.getElementById("minPrice")
+    const maxPrice = document.getElementById("maxPrice")
+
+    filteredList = colList
+
+    if(filters.stock.includes("in") && !filters.stock.includes("notIn")){
+        filteredList = filteredList.filter(p =>
+            totalColList.some(tp =>
+            tp.name == p.name && tp.stock > 0)
+        )
+    }else if(filters.stock.includes("notIn") && !filters.stock.includes("in")){
+        filteredList = filteredList.filter(p =>
+            !totalColList.some(tp =>
+            tp.name == p.name && tp.stock > 0)
+        )
+    }
+    if(filters.sizes.length > 0){
+        filteredList = filteredList.filter(p =>
+            totalColList.some(product =>
+            product.name === p.name &&
+            filters.sizes.includes(product.size))
+        )
+    }
+    if(filters.brands.length > 0){filteredList = filteredList.filter(p=> p.brand.some(b => filters.brands.includes(b)))}
+    if(minPrice.value){filteredList = filteredList.filter(p=> p.price >= parseFloat(minPrice.value))}
+    if(maxPrice.value){filteredList = filteredList.filter(p=> p.price <= parseFloat(maxPrice.value))}
+    
+    colNum.innerHTML = `${filteredList.length} productos`
+    renderPage(filteredList, 1)
+    pagination(filteredList)
+}
+
+//Ordenar por
+const sortProducts = (sortValue)=>{
+    let sortedList = []
+    filteredList.length > 0 ? sortedList=filteredList : sortedList=colList 
+
+    if(sortValue=="az"){
+        sortedList = sortedList.sort((p1, p2) => p1.name.localeCompare(p2.name))
+    }else if(sortValue=="za"){
+        sortedList = sortedList.sort((p1, p2) => p2.name.localeCompare(p1.name))
+    }else if(sortValue=="min-max"){
+        sortedList = sortedList.sort((p1, p2) => p1.price - p2.price)
+    }else if(sortValue=="max-min"){
+        sortedList = sortedList.sort((p1, p2) => p2.price - p1.price)
+    }
+    renderPage(sortedList, 1)
+    pagination(sortedList)
+}
+
+//Carga dinámica de products.html
+const renderProductPage = ()=>{
+    const productPage = document.querySelector(".productPage")
+    selectedProduct = productsList.find(p => p.name == nombreProducto)
+    
+    productPage.innerHTML = `
+        <div class="productImage">
+            <img src="/web-SaturdayConcept/img/Productos/${selectedProduct.img}"/>
+        </div>        
+        <section class="productDescription">
+            <h2>${selectedProduct.name}</h2>
+            <h3>${selectedProduct.price}€</h3>
+            <h4>TALLA</h4>
+            <div class="grid-btns-blancos"></div>
+            <p class="noMoreStock"></p>
+            <button class="btn-blanco" id="addToCart">Agregar al carrito</button>
+            <details id="description">
+                <summary>Descripción</summary>
+                <p>${selectedProduct.description}</p>
+            </details>
+            <details>
+                <summary>Envíos y Devoluciones</summary>
+                <p>
+                    Recibirás un email de confirmación en cuanto tu pedido sea
+                    enviado. Los plazos de entrega pueden variar dependiendo de la
+                    ubicación y pueden experimentar demoras en épocas de alta demanda,
+                    como promociones especiales, eventos comerciales o la temporada de
+                    fiestas.<br />
+                    <br />
+                    Si necesitas devolver tu compra, dispones de 14 días hábiles desde
+                    la recepción del pedido para realizarlo. Puedes obtener más
+                    información y revisar todos los detalles en nuestra sección de
+                    Ayuda.
+                </p>
+            </details>
+        </section>    
+    `;
+    
+    renderProductSizes()
+    addToCartListener()
+
+    const descriptionContainer = document.getElementById("description")  //Estético
+    descriptionContainer.open = true
+    
+}
+
+const renderProductSizes = ()=>{
+    const sizesContainer = document.querySelector(".grid-btns-blancos")
+    collection = selectedProduct.section
+    const sizes = makeSizes()
+    const disponibleSizes = totalProductsList.filter(p=>p.name==selectedProduct.name)
+                                             .map(p=>p.size)
+    let previousSizeButton
+
+    sizesContainer.innerHTML = ""
+    sizes.forEach(s=>{
+        const sizeButton = document.createElement("button")
+        sizeButton.textContent  = s
+        if(disponibleSizes.includes(s)){
+            sizeButton.classList.add("btn-blanco")
+            sizeButton.addEventListener("click",function(){
+                    selectedProduct = totalProductsList.find(p=>p.name == selectedProduct.name && p.size == this.textContent)
+                    if(previousSizeButton){previousSizeButton.classList.remove("active")}
+                    previousSizeButton = this
+                    this.classList.add("active")
+                }
+            ) 
+        }else{
+            sizeButton.classList.add("noDisponible")
+        }
+        sizesContainer.appendChild(sizeButton)
+    })    
+}
+
+const addToCartListener = ()=>{
+    const cartBtn = document.getElementById("addToCart")
+    const noMoreStockTag = document.querySelector(".noMoreStock")
+    cartBtn.addEventListener("click",function(){
+        let cartProductIndex = cartList.findIndex(p => p.id === selectedProduct.id)
+        noMoreStockTag.innerHTML=""
+
+        if(cartProductIndex==-1){
+            cartList.push({...selectedProduct, quantity:1})
+            notification.style.visibility = "visible"
+        }else{
+            if(cartList[cartProductIndex].stock>=cartList[cartProductIndex].quantity+1){
+                cartList[cartProductIndex].quantity += 1
+                notification.style.visibility = "visible"
+            }else{
+                noMoreStockTag.innerHTML='<i class="fa-solid fa-circle-exclamation"></i> Tu carrito ya tiene la cantidad máxima de este artículo.'
+            }
+        }
+        localStorage.setItem("cart", JSON.stringify(cartList))  
+    })
+}
+
+//Página carrito
+const renderCartList = ()=>{ //Cargar elementos de la página
+    const cartPage = document.querySelector(".cartPage")
+    if(cartList.length==0){
+        cartPage.innerHTML = `
+            <h1 class="centrado" style="font-size: 3.25rem; font-weight: 600; margin: 5% 0 3% 0;">Tu carrito esta vacío</h1>
+            <a href="/web-SaturdayConcept/index.html" class="centrado">
+                <button class="pagarPedido" style="width: 18%">Seguir comprando</button>
+            </a>
+            `
+    }else{
+        const cartItemsContainer = document.getElementById("cartItems")
+        cartItemsContainer.innerHTML = ""
+        cartList.forEach(i=>{
+            let cartProductIndex = cartList.findIndex(p => p.id === i.id)
+            let totalListProductIndex = totalProductsList.findIndex(p => p.id === i.id)
+
+            if(totalListProductIndex == -1 || totalProductsList[totalListProductIndex].stock==0){ //Para eliminarlo del localStorage en caso de que ya no exista en la BD
+                cartList.splice(cartProductIndex,1)
+                localStorage.setItem("cart", JSON.stringify(cartList))
+            }
+            cartItemsContainer.innerHTML += `
+                <tr>
+                    <td class="cartListImg">
+                      <img src="/web-SaturdayConcept/img/Productos/${i.img}"/>
+                    </td>
+    
+                    <td>
+                      <div class="cartProductDetails">
+                        <h3>${i.name}</h3>
+                        <p>€${i.price.toFixed(2).replace('.', ',')}</p>
+                        <p>Size: ${i.size}</p>
+                      </div>
+                    </td>
+    
+                    <td>
+                      <div class="quantity">
+                        <button onclick="changeQuantity(${cartProductIndex}, '-')" id="less"><i class="fa-solid fa-minus"></i></button>
+                        <p>${i.quantity}</p>
+                        <button onclick="changeQuantity(${cartProductIndex}, '+') "id="more"><i class="fa-solid fa-plus"></i></button>
+                      </div>
+                      <p class="noMoreStock"></p>
+                    </td>
+    
+                    <td class="total">€${(i.price*i.quantity).toFixed(2).replace('.', ',')}</td>
+                </tr>
+            `
+            renderTotalCart()
+        })
+    }
+}
+
+const calculeTotalCart = ()=>{ //Cargar total estimado
+    return totalCart = cartList.reduce((acc, i)=>{
+        return acc + (i.price * i.quantity)
+    }, 0)
+}
+const renderTotalCart = ()=>{
+    const totalCartTag = document.querySelector("#totalCart p")
+    totalCartTag.innerHTML=`€${calculeTotalCart().toFixed(2).replace('.', ',')}EUR`
+}
+
+const changeQuantity = (productIndex, operation)=>{ //Cambiar la cantidad de cada producto
+    const quantityContainers = document.querySelectorAll(".quantity p")
+    const totalContainers = document.querySelectorAll(".total")
+    const noMoreStockTag = document.querySelectorAll(".noMoreStock")
+    noMoreStockTag[productIndex].innerHTML=""
+
+    if(operation=="+"){
+        cartList[productIndex].stock>=cartList[productIndex].quantity+1
+        ? cartList[productIndex].quantity += 1
+        : noMoreStockTag[productIndex].innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Tu carrito ya tiene la cantidad máxima de este artículo.'
+        
+    }else if(operation=="-" && cartList[productIndex].quantity-1 >= 0){
+        cartList[productIndex].quantity -= 1
+    }
+    if(cartList[productIndex].quantity == 0){
+        cartList.splice(productIndex,1)
+        localStorage.setItem("cart", JSON.stringify(cartList))    
+        renderCartList()
+    }else{
+        localStorage.setItem("cart", JSON.stringify(cartList))    
+        quantityContainers[productIndex].innerHTML = cartList[productIndex].quantity
+        totalContainers[productIndex+1].innerHTML = `€${(cartList[productIndex].price*cartList[productIndex].quantity).toFixed(2).replace('.', ',')}`
+        renderTotalCart()
+    }
+}
+
+//RenderPage
+const renderPaymentCart = async()=>{
+    const productsContainer = document.querySelector(".cartProducts table")
+    const subtotalTag = document.getElementById("subtotal")
+    const subtotalPriceTag = document.getElementById("subtotalPrice")
+    const totalPriceTag = document.getElementById("totalPrice")
+    const totalCart = calculeTotalCart()
+    productsContainer.innerHTML = ""
+    cartList.forEach(i=>
+        productsContainer.innerHTML +=`
+          <tr>
+            <td>
+              <div class="cartListImg">
+                <div class="notification">${i.quantity}</div>
+                <img src="/web-SaturdayConcept/img/Productos/${i.img}" />
+              </div>
+            </td>
+            <td class="productDetails">
+              <div>
+                <h3>${i.name}</h3>
+                <p>${i.size}</p>
+              </div>
+            </td>
+            <td class="total">${(i.price*i.quantity).toFixed(2).replace('.', ',')} €</td>
+          </tr>
+        `
+    )
+    subtotalTag.innerHTML = `Subtotal · ${cartList.length} artículos`
+    subtotalPriceTag.innerHTML = `${totalCart.toFixed(2).replace('.', ',')} €`
+    totalPriceTag.innerHTML = `${totalCart.toFixed(2).replace('.', ',')} €`
+    discountListener()
+    await renderCountries()
+}
+const getCountries = async()=>{
+    const response = await fetch('http://127.0.0.1:8000/api/countries') 
+    const data = await response.json()
+    return data
+}
+const renderCountries = async ()=>{
+    const countriesContainer = document.getElementById("pais")
+    const countries = await getCountries()
+    countries.forEach(c=>countriesContainer.innerHTML+=`<option value="${c.id}">${c.name}</option>`)
+}
+const discountListener = ()=>{
+    const discountInput = document.querySelector("#discount input")
+    const discountBtn = document.querySelector("#discount button")
+    const totalPriceTag = document.getElementById("totalPrice")
+    const subtotalDiscountTag = document.getElementById("subtotalDiscount")
+    const discountPctTag = document.getElementById("discountPct")
+    const discountErrorTag = document.getElementById("discountError")
+    const totalCart = calculeTotalCart()
+    
+    discountBtn.addEventListener("click", function(){
+        let withDiscount = false
+        discountErrorTag.style.visibility = "hidden"
+        discountInput.style.border = ""
+        discountsList.forEach(d=>{
+            if(d.name == discountInput.value){
+                totalPriceTag.innerHTML = `${(totalCart - totalCart*d.pct/100).toFixed(2).replace('.', ',')} €`
+                subtotalDiscountTag.innerHTML = `Descuento · "${d.name}"`
+                discountPctTag.innerHTML = `${d.pct}%`
+                withDiscount = true
+            }
+        })
+        if(!withDiscount){
+            discountInput.style.border = "2px solid rgb(217, 0, 0)"
+            discountErrorTag.style.visibility = "visible"
+        }
+    })
+}
+
+
+//MAIN
+const init = async () =>{
+    totalProductsList = await getProducts()
+    productsList = listDistinct(totalProductsList)
+    const cartItem = localStorage.getItem("cart")
+    if(cartItem){
+        cartList = JSON.parse(cartItem)
+        cartList.forEach(item => {
+            const p = totalProductsList.find(product => product.id === item.id)
+            if(p) item.stock = p.stock
+        })
+    }    
+    
+    if(window.location.pathname=='/web-SaturdayConcept/index.html'){renderIndexProducts()} 
+    
+    if (collection) {renderCollection(collection)}
+    
+    if(window.location.pathname !='/web-SaturdayConcept/other/payment.html'){buscadorEvent()}
+    if (busqueda){renderBusqueda()}
+    
+    if(busqueda || collection){
+        const sortTag = document.getElementById("ordenar")
+        sortTag.addEventListener("change",()=>sortProducts(sortTag.value))
+    }
+    
+    if(nombreProducto){renderProductPage()}
+    
+    if(window.location.pathname=='/web-SaturdayConcept/other/cart.html'){
+        renderCartList()
+    }
+    if(window.location.pathname=='/web-SaturdayConcept/other/payment.html'){
+        renderPaymentCart()
+    }
+    
+    notification = document.querySelector(".notification")
+    notification.style.visibility = "hidden"
+    if(cartList.length>0){
+        notification.style.visibility = "visible"
+    }
+}
+init()

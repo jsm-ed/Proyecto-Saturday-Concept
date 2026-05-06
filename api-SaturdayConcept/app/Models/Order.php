@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    public $timestamps = false;
     protected $fillable = ['discount', 'order_total', 'address_id', 'customer_id'];
 
     public function address()

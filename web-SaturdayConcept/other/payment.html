@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proyecto Juan Sastre Montero LLMM</title>
+    <link rel="stylesheet" href="/web-SaturdayConcept/css/styles.css" />
+    <script defer src="/web-SaturdayConcept/js/payment.js"></script>
+    <script defer src="/web-SaturdayConcept/js/app.js"></script>
+  </head>
+  <body>
+    <header class="paymentPageHeader">
+      <a href="/web-SaturdayConcept/index.html"><h1>Saturday Concept</h1></a>
+      <a href="/web-SaturdayConcept/other/cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+    </header>
+    <main class="paymentPage">
+      <div class="paymentMenu">
+        <h2>Contacto</h2>
+        <input
+          class="buscador"
+          id="contacto"
+          type="text"
+          placeholder="Email"
+        />
+
+        <h2>Entrega</h2>
+        <form id="userData" action="">
+          <select class="buscador" id="pais">
+            <option value="" disabled selected hidden>
+              Selecciona un país
+            </option>
+          </select>
+          <div>
+            <input class="buscador" type="text" placeholder="Nombre" />
+            <input class="buscador" type="text" placeholder="Apellidos" />
+          </div>
+          <input class="buscador" type="text" placeholder="Dirección" />
+          <input
+            class="buscador"
+            type="text"
+            placeholder="Casa, apartamento, etc"
+          />
+          <div>
+            <input class="buscador" type="text" placeholder="Ciudad" />
+            <input class="buscador" type="text" placeholder="Codigo postal" />
+          </div>
+        </form>
+        <button class="blue-btn" id="pay-btn">Pagar ahora</button>
+      </div>
+      <div class="cartProducts">
+        <table>
+          
+        </table>
+        <div id="discount">
+          <input
+            class="buscador"
+            type="text"
+            placeholder="Código de descuento o tarjeta de regalo"
+          />
+          <button class="blue-btn">Aplicar</button>
+        </div>
+        <p class="error" id="discountError">Introduce un código de descuento o tarjeta de <br> regalo válido(a)</p>
+        <div class="separated">
+          <p id="subtotal"></p>
+          <p id="subtotalPrice"></p>
+        </div>
+        <div class="separated">
+          <p id="subtotalDiscount"></p>
+          <p id="discountPct"></p>
+        </div>
+        <div class="separated">
+          <h4>Total</h4>
+          <h4 id="totalPrice"></h4>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

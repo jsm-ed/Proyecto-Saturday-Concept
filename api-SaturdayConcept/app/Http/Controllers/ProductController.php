@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Http\Resources\ProductResource;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        return Product::with(['section', 'size', 'brands'])->get();
+        return ProductResource::collection(Product::with('brands')->get());
     }
 
     public function store(Request $request)
@@ -17,31 +18,52 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string',
             'price' => 'required|numeric',
-            'section_name' => 'required|exists:sections,name',
+            'section' => 'required|exists:sections,name',
         ]);
-        $product = Product::create($request->all());
+
+        $data = $request->all();
+        if (isset($data['section'])) {
+            $data['section_name'] = $data['section'];
+            unset($data['section']);
+        }
+        if (array_key_exists('size', $data)) {
+            $data['size_name'] = $data['size'];
+            unset($data['size']);
+        }
+
+        $product = Product::create($data);
 
         if ($request->has('brands')) {
             $product->brands()->attach($request->brands);
         }
 
-        return response()->json($product->load(['section', 'size', 'brands']), 201);
+        return new ProductResource($product->load('brands'));
     }
 
     public function show(Product $product)
     {
-        return $product->load(['section', 'size', 'brands']);
+        return new ProductResource($product->load('brands'));
     }
 
     public function update(Request $request, Product $product)
     {
-        $product->update($request->all());
+        $data = $request->all();
+        if (isset($data['section'])) {
+            $data['section_name'] = $data['section'];
+            unset($data['section']);
+        }
+        if (array_key_exists('size', $data)) {
+            $data['size_name'] = $data['size'];
+            unset($data['size']);
+        }
+
+        $product->update($data);
 
         if ($request->has('brands')) {
             $product->brands()->sync($request->brands);
         }
 
-        return response()->json($product->load(['section', 'size', 'brands']));
+        return new ProductResource($product->load('brands'));
     }
 
     public function destroy(Product $product)

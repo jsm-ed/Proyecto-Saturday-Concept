@@ -53,7 +53,8 @@ export class Modal {
             ).join('');
             input = `<select id="field-${f.key}" ${dis} ${req}><option value="">--</option>${opts}</select>`;
         } else {
-            input = `<input type="${f.type || 'text'}" id="field-${f.key}" value="${val}" ${dis} ${req}>`;
+            const step = f.step ? `step="${f.step}"` : '';
+            input = `<input type="${f.type || 'text'}" id="field-${f.key}" value="${val}" ${dis} ${req} ${step}>`;
         }
         return `<div class="form-group"><label>${f.label}</label>${input}</div>`;
     }

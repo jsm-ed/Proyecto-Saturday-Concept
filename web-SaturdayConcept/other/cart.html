@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proyecto Juan Sastre Montero LLMM</title>
+    <link rel="stylesheet" href="/web-SaturdayConcept/css/styles.css" />
+    <script defer src="/web-SaturdayConcept/js/app.js"></script>
+  </head>
+  <body>
+    <!--HEADER-->
+    <header>
+      <!--divs de separación para estructura-->
+      <div>
+        <a href="/web-SaturdayConcept/index.html"><img src="/web-SaturdayConcept/img/logo.png" alt="logo" /></a>
+        <input
+          type="text"
+          class="buscador"
+          id="buscador"
+          placeholder="Buscar productos..."
+        />
+      </div>
+      <div>
+        <!--Sin función (Probablemente lo hayan puesto porque tienen pensado expandirse en un futuro)-->
+        <select name="pais" id="pais">
+          <option value="">España (EUR)</option>
+        </select>
+        <a class="cartHeader" href="/web-SaturdayConcept/other/cart.html"><i class="fa-solid fa-cart-shopping"></i><div class="notification"></div></a>
+      </div>
+    </header>
+    <!--NAV-->
+    <div class="centrado">
+      <!--NAV-->
+      <nav>
+        <div class="elementoNav">
+          <a href="/web-SaturdayConcept/other/collection.html?collection=sneakers">Sneakers</a>
+          <div class="submenu">
+            <div>
+              <h4>NIKE</h4>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=travis scott">Travis Scott</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=Nocta">Nocta</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=dunk low">Dunk low</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=dunk high">Dunk High</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=dunk sb">Dunk SB</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=air force 1">Air force 1</a>
+            </div>
+            <div>
+              <h4>YEEZY</h4>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=350">350</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=slide">Slide</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=foam">Foam</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=700">700</a>
+            </div>
+            <div>
+              <h4>ADIDAS</h4>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=bad bunny">Bad Bunny</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection= gazelle">Gazelle</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection= campus 00">Campus 00</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection= handball spezial">Handball Spezial</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=samba">Samba</a>
+            </div>
+            <div>
+              <h4>JORDAN</h4>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=jordan 1">Jordan 1</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=jordan 1 high">Jordan 1 High</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=jordan 1 mid">Jordan 1 Mid</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=jordan 1 low">Jordan 1 Low</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=jordan 4">Jordan 4</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=jordan 3">Jordan 3</a>
+              <a href="/web-SaturdayConcept/other/collection.html?collection=jordan 11">Jordan 11</a>
+            </div>
+          </div>
+        </div>
+        <div class="elementoNav">
+          <a href="/web-SaturdayConcept/other/collection.html?collection=streetwear">Streetwear</a>
+        </div>
+        <div class="elementoNav">
+          <a href="/web-SaturdayConcept/other/collection.html?collection=accesorios">Accesorios</a>
+        </div>
+        <div class="elementoNav">
+          <a href="/web-SaturdayConcept/other/collection.html?collection=new era">New Era</a>
+        </div>
+        <div class="elementoNav"><a href="https://saturdayconcept.com/pages/marcas">Marcas</a></div>
+        <div class="elementoNav"><a href="https://saturdayconcept.com/pages/concept-store-palma-de-mallorca">Donde estamos</a></div>
+      </nav>
+    </div>
+    <!--MAIN-->
+    <main class="cartPage">
+      <h2>Tu carrito</h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="productoHeader" colspan="2">PRODUCTO</th>
+            <th class="cantidadHeader">CANTIDAD</th>
+            <th class="total">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody id="cartItems">
+        </tbody>
+      </table>
+
+      <div id="endCart">
+        <div>
+          <div id="totalCart">
+            <h3>Total estimado</h3>
+            <p></p>
+          </div>
+          <p>
+            Impuestos incluidos. Descuentos y envío calculados <br />en la
+            pantalla de pago.
+          </p>
+          <a href="/web-SaturdayConcept/other/payment.html"><button class="pagarPedido">Pagar pedido</button></a>
+        </div>
+      </div>
+    </main>
+    <!--FOOTER-->
+    <footer>
+      <div>
+        <h3>Comprar</h3>
+        <a href="">Sneakers</a>
+        <a href="">Streetwear</a>
+        <a href="">Gorras y Accesorios</a>
+        <a href="">Nuestras Marcas</a>
+      </div>
+
+      <div>
+        <h3>Información</h3>
+        <a href="">Sobre Nosotros</a>
+        <a href="">Donde Estamos</a>
+        <a href="">Blog</a>
+        <a href="">Contacto</a>
+      </div>
+
+      <div>
+        <h3>Información Legal</h3>
+        <a href="">Política de devoluciones y reembolsos</a>
+        <a href="">Política de privacidad</a>
+        <a href="">Términos del Servicio</a>
+        <a href="">Política de envío</a>
+        <a href="">Información de contacto</a>
+        <a href="">Aviso legal</a>
+      </div>
+
+      <div>
+        <h3>Contacto</h3>
+        <a href="">Costa de la Pols, 5, bj izq, Distrito Centro</a>
+        <a href="">07003 Palma, Illes Balears</a>
+        <p>jsm00@iesemilidarder.com</p>
+        <p>+34 653 69 89 76</p>
+      </div>
+    </footer>
+    <div id="final">
+      © 2026 · Trabajo académico · Juan Sastre Montero · IES EMILI DARDER
+    </div>
+  </body>
+</html>

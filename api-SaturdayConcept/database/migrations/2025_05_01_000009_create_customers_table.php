@@ -14,7 +14,6 @@ return new class extends Migration
             $table->string('surnames');
             $table->string('contact');
             $table->foreignId('address_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
         });
     }
 

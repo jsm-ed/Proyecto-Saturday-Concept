@@ -37,9 +37,7 @@ export class OrdersPage {
                   }
                 },
                 { key: 'discount', label: i18n.t('fields.discount'), sortable: true, render: v => `${v}%` },
-                { key: 'order_total', label: i18n.t('fields.order_total'), sortable: true, render: v => `${Number(v).toFixed(2)} €` },
-                { key: 'created_at', label: i18n.t('fields.created_at'), sortable: true,
-                  render: v => v ? new Date(v).toLocaleDateString() : '' }
+                { key: 'order_total', label: i18n.t('fields.order_total'), sortable: true, render: v => v != null ? `${Number(v).toFixed(2)} €` : '' }
             ],
             actions: [
                 { name: 'items', icon: ICONS.items, cls: 'items' },
@@ -83,8 +81,8 @@ export class OrdersPage {
               options: this.customers.map(c => ({ value: c.id, label: `${c.name} ${c.surnames}` })) },
             { key: 'address_id', label: i18n.t('fields.address_id'), type: 'select', required: true,
               options: this.addresses.map(a => ({ value: a.id, label: `${a.name}${a.door ? ' ' + a.door : ''}, ${a.pc}` })) },
-            { key: 'discount', label: i18n.t('fields.discount'), type: 'number' },
-            { key: 'order_total', label: i18n.t('fields.order_total'), type: 'number' }
+            { key: 'discount', label: i18n.t('fields.discount'), type: 'number', step: '0.01' },
+            { key: 'order_total', label: i18n.t('fields.order_total'), type: 'number', step: '0.01' }
         ];
     }
 

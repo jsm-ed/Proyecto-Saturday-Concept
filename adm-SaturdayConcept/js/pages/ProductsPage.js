@@ -26,9 +26,9 @@ export class ProductsPage {
             columns: [
                 { key: 'id', label: i18n.t('fields.id'), sortable: true },
                 { key: 'name', label: i18n.t('fields.name'), sortable: true },
-                { key: 'price', label: i18n.t('fields.price'), sortable: true, render: v => `${Number(v).toFixed(2)} €` },
-                { key: 'section_name', label: i18n.t('fields.section_name'), sortable: true },
-                { key: 'size_name', label: i18n.t('fields.size_name'), sortable: true },
+                { key: 'price', label: i18n.t('fields.price'), sortable: true, render: v => v != null ? `${Number(v).toFixed(2)} €` : '' },
+                { key: 'section', label: i18n.t('fields.section_name'), sortable: true },
+                { key: 'size', label: i18n.t('fields.size_name'), sortable: true },
                 { key: 'stock', label: i18n.t('fields.stock'), sortable: true }
             ],
             actions: [
@@ -65,10 +65,10 @@ export class ProductsPage {
     _fields(mode) {
         return [
             { key: 'name', label: i18n.t('fields.name'), type: 'text', required: true },
-            { key: 'price', label: i18n.t('fields.price'), type: 'number', required: true },
-            { key: 'section_name', label: i18n.t('fields.section_name'), type: 'select', required: true,
+            { key: 'price', label: i18n.t('fields.price'), type: 'number', required: true, step: '0.01' },
+            { key: 'section', label: i18n.t('fields.section_name'), type: 'select', required: true,
               options: this.sections.map(s => ({ value: s.name, label: s.name })) },
-            { key: 'size_name', label: i18n.t('fields.size_name'), type: 'select',
+            { key: 'size', label: i18n.t('fields.size_name'), type: 'select',
               options: this.sizes.map(s => ({ value: s.name, label: s.name })) },
             { key: 'stock', label: i18n.t('fields.stock'), type: 'number' },
             { key: 'img', label: i18n.t('fields.img'), type: 'text' },

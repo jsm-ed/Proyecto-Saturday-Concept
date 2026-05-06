@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('section_name');
             $table->string('size_name')->nullable();
             $table->integer('stock')->default(0);
-            $table->timestamps();
 
             $table->foreign('section_name')->references('name')->on('sections')->onDelete('cascade');
             $table->foreign('size_name')->references('name')->on('sizes')->onDelete('set null');

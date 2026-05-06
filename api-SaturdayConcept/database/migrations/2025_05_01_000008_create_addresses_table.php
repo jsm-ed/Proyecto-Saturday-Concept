@@ -14,7 +14,6 @@ return new class extends Migration
             $table->string('door')->nullable();
             $table->string('pc');
             $table->foreignId('city_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
         });
     }
 

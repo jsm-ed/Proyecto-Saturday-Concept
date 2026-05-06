@@ -12,7 +12,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('country_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
         });
     }
 
