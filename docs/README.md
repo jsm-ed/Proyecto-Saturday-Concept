@@ -47,7 +47,7 @@ Crear una tienda web funcional que permita a los usuarios navegar por un catálo
 - **HTML5 y CSS3 (Vanilla):** Para la estructuración y estilización. Se optó por CSS nativo para tener un control absoluto sobre el diseño, y así, poder replicar Saturday Concept lo más parecido posible sin depender de frameworks.
 - **Vanilla JS:** Utilizado para toda la lógica de interacción, consumo de API (Fetch y librería JSON), manejo del DOM, mantenimiento de datos en Local Storage y validaciones con regex.
 - **Node.js v24.11:** Como entorno de ejecución para facilitar el desarrollo y pruebas del frontend durante la creación del proyecto.
-- **Font awesome v6.7.2** 
+- **Font awesome v6.7.2**: Para añadir iconos vectoriales de forma rápida y sencilla, manteniendo una interfaz consistente, ligera y visualmente más clara sin necesidad de imágenes.
 - **Google Fonts** Para incorporar tipografías web personalizadas y mejorar la apariencia visual de la aplicación
 
 ### Backend
@@ -130,7 +130,7 @@ Crear una tienda web funcional que permita a los usuarios navegar por un catálo
 ## 6. Conclusión
 
 **Problemas encontrados y soluciones:**
-- **Inconsistencia de la web real:** Al ser una web de una pequeña tienda, la web tiene irregularidades como distintos estilos segun el producto, distintas funcionalidades según la sección, una página que no funciona (`Marcas`), etc.
+- **Inconsistencia de la web real:** Al ser una web de una pequeña tienda, la web tiene irregularidades como distintos estilos segun el producto, distintas funcionalidades según la sección, una página que no funciona (`Marcas`), etc. *Solución:* Unificar estilos y funcionalidades.
 - **Inconsistencia en el formato de datos de la API:** Inicialmente, el frontend utilizaba un archivo `data/products.JSON`. Al migrar a la API, la estructura no coincidía. *Solución:* Modificar el `ProductController` de Laravel para transformar las colecciones al formato esperado.
 
 **Mejoras a añadir:**
