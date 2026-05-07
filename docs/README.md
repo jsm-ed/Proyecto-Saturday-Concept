@@ -69,27 +69,31 @@ Crear una tienda web funcional que permita a los usuarios navegar por un catálo
 
 ## 5. Pasos Principales del Desarrollo
 ### 5.1. Configuración del Entorno
-- Servidor de base de datos (MySQL (XAMPP))
-- Navegador web y un servidor local estático (ej. Live Server en VSCode)
+
+**Requisitos previos:**
+- **PHP 8.2+** (Incluido en las versiones recientes de XAMPP).
+- **Composer** (Gestor de dependencias de PHP).
+- Servidor de base de datos MySQL (Incluido en XAMPP).
+- Servidor local web(Live Server).
+- **Laravel** (No requiere instalación global, se descargará automáticamente como dependencia al usar Composer).
 
 **Pasos para desplegar en local:**
 1. **Clonar el repositorio.**
 2. **Base de Datos:**
-   - Abre phpMyAdmin (XAMPP).
-   - Crea una base de datos nueva (ej. `saturday_concept`).
-   - Importa el archivo `.sql` que se encuentra en la carpeta `docs` dentro de esa base de datos.
+   - Abrir phpMyAdmin (XAMPP).
+   - Crear una base de datos nueva.
+   - Importar el archivo `.sql` que se encuentra en la carpeta `docs` dentro de la base de datos que se acaba de crear.
 3. **Despliegue del Backend:**
    ```bash
    cd api-SaturdayConcept
    cp .env.example .env
-   # Configurar las credenciales de la BD (nombre de la base de datos que acabas de crear) en el archivo .env
+   # En el archivo .env, configura DB_DATABASE con el nombre de la base de datos creada.
    composer install
    php artisan key:generate
    php artisan serve
    ```
-   *(La API correrá por defecto en `http://127.0.0.1:8000`)*
-3. **Despliegue del Frontend:**
-   Levantar `web-SaturdayConcept` y `adm-SaturdayConcept` mediante un servidor local como Live Server.
+4. **Despliegue del Frontend:**
+   - Levantar `web-SaturdayConcept` y `adm-SaturdayConcept` mediante un servidor local como Live Server.
 
 ---
 
@@ -98,11 +102,11 @@ Crear una tienda web funcional que permita a los usuarios navegar por un catálo
 - **Modelos Principales:** 
   `Product`, `Order`, `Customer`, `Address`, `OrderItem`, `Size`, `Brand`. Contienen las definiciones de relaciones complejas.
 - **Controladores Clave:** 
-  - `ProductController`: Gestiona la entrega de datos del catálogo. Se ajustó para que la estructura de respuesta JSON encaje perfectamente con lo que esperaba el frontend.
-  - `OrderController`: Recibe el payload del checkout. Coordina la creación del cliente/dirección, genera la orden, crea los ítems correspondientes y realiza el descuento del stock.
-- **Rutas Principales (Entrypoints):**
-  - `GET /api/products`: Obtiene el catálogo completo.
-  - `POST /api/orders`: Endpoint crítico para el procesamiento del pago.
+  - `ProductController`: Gestiona la entrega de datos del catálogo, ajustada para que la estructura de respuesta JSON encaje perfectamente con lo que esperaba el frontend.
+  - `OrderController`: Procesa la compra. Guarda la información del cliente y del pedido, y actualiza el stock de los productos.
+- **Rutas principales:**
+  - `GET /api/products`: Endpoint para obtener el catálogo completo.
+  - `POST /api/orders`: Endpoint para el procesamiento del pago.
   - Endpoints CRUD para el panel de administración (`PUT /api/products/{id}`, etc).
 
 ---
@@ -111,7 +115,11 @@ Crear una tienda web funcional que permita a los usuarios navegar por un catálo
 
 - **Vistas Públicas:**
   - **`index.html`:** Página de inicio con la carga dinámica de productos desde la API.
-  - **`payment.html`:** Formulario de recogida de datos del usuario (nombre, email, teléfono, dirección) y resumen final del pedido.
+  - **`other/cart.html`:** Vista detallada del carrito de compras donde el usuario puede visualizar los productos añadidos, ver totales y proceder al pago.
+  - **`other/collection.html`:** Página dedicada a mostrar el catálogo de productos filtrado por categoría o colección, incluyendo opciones de filtrado y ordenación.
+  - **`other/payment.html`:** Formulario de recogida de datos del usuario (nombre, email, teléfono, dirección) y resumen final del pedido previo a la compra.
+  - **`other/product.html`:** Vista individual y detallada de un producto específico, permitiendo seleccionar talla y añadirlo al carrito.
+  - **`other/search.html`:** Página de resultados de búsqueda para localizar productos en todo el catálogo de forma dinámica.
 - **Componentes Lógicos:**
   - **`app.js`:** Núcleo de la tienda. Gestiona el renderizado del catálogo, el estado del carrito (en LocalStorage) y los eventos generales.
   - **`payment.js`:** Se encarga exclusivamente del flujo de pago. Realiza la validación de campos (mostrando "Campo inválido" con bordes rojos en inputs erróneos) y construye el payload simplificado que se envía a la API mediante `fetch`.
@@ -122,14 +130,13 @@ Crear una tienda web funcional que permita a los usuarios navegar por un catálo
 ## 6. Conclusión
 
 **Problemas encontrados y soluciones:**
-- **Inconsistencia en el formato de datos de la API:** Inicialmente, el frontend utilizaba un archivo `data/products.JSON`. Al migrar a la API, la estructura no coincidía. *Solución:* Modificar el `ProductController` de Laravel para transformar las colecciones de Eloquent y mapearlas al formato esperado.
-**Aportaciones a nivel personal:**
-*(Añade aquí tu experiencia personal: qué parte representó un mayor desafío, qué has aprendido acerca de la interacción Frontend-Backend, tu mejora y soltura escribiendo código JavaScript o tu entendimiento de Laravel...)*
+- **Inconsistencia de la web real:** Al ser una web de una pequeña tienda, la web tiene irregularidades como distintos estilos segun el producto, distintas funcionalidades según la sección, una página que no funciona (`Marcas`), etc.
+- **Inconsistencia en el formato de datos de la API:** Inicialmente, el frontend utilizaba un archivo `data/products.JSON`. Al migrar a la API, la estructura no coincidía. *Solución:* Modificar el `ProductController` de Laravel para transformar las colecciones al formato esperado.
 
-**Mejoras que añadiría (Futuro):**
+**Mejoras a añadir:**
 - **Autenticación de Usuarios:** Implementar un sistema de Login/Registro para que los clientes puedan acceder a su historial de compras.
-- **Pasarela de pago real:** Integrar el frontend con plataformas como Stripe o PayPal en lugar de simular la transacción final.
+- **Pasarela de pago real:** Integrar el frontend con plataformas como PayPal en lugar de simular la transacción final.
 - **Notificaciones:** Envío automático de un email al cliente con el resumen de su pedido al completar el pago.
-
+- **Separación de componentes lógicos**
 ---
 *Juan Sastre Montero  -  Proyecto para 1ºGS ASIR.*
