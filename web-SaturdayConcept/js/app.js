@@ -1,6 +1,5 @@
 const numProdPagina = 8
 let notification
-
 // Variables Index
 const productsContainers = document.querySelectorAll(".productos")
 
@@ -563,6 +562,7 @@ const init = async () =>{
     totalProductsList = await getProducts()
     productsList = listDistinct(totalProductsList)
     const cartItem = localStorage.getItem("cart")
+    
     if(cartItem){
         cartList = JSON.parse(cartItem)
         cartList.forEach(item => {
@@ -574,10 +574,7 @@ const init = async () =>{
     if(window.location.pathname=='/web-SaturdayConcept/index.html'){renderIndexProducts()} 
     
     if (collection) {renderCollection(collection)}
-    
-    if(window.location.pathname !='/web-SaturdayConcept/other/payment.html'){buscadorEvent()}
     if (busqueda){renderBusqueda()}
-    
     if(busqueda || collection){
         const sortTag = document.getElementById("ordenar")
         sortTag.addEventListener("change",()=>sortProducts(sortTag.value))
@@ -585,17 +582,17 @@ const init = async () =>{
     
     if(nombreProducto){renderProductPage()}
     
-    if(window.location.pathname=='/web-SaturdayConcept/other/cart.html'){
-        renderCartList()
-    }
-    if(window.location.pathname=='/web-SaturdayConcept/other/payment.html'){
-        renderPaymentCart()
-    }
     
+    if(window.location.pathname=='/web-SaturdayConcept/other/payment.html'){renderPaymentCart()}
     notification = document.querySelector(".notification")
-    notification.style.visibility = "hidden"
+    if(window.location.pathname !='/web-SaturdayConcept/other/payment.html'){
+        buscadorEvent()
+        notification.style.visibility = "hidden"
+    }
     if(cartList.length>0){
         notification.style.visibility = "visible"
     }
+    
+    if(window.location.pathname=='/web-SaturdayConcept/other/cart.html'){renderCartList()}
 }
 init()

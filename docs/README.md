@@ -52,7 +52,7 @@ Crear una tienda web funcional que permita a los usuarios navegar por un catálo
 
 ### Backend
 - **Antigravity:** Como herramienta de apoyo en el desarrollo del backend y del backoffice, ya que permite generar estructuras de código y funcionalidades iniciales a partir de agentes de IA. Esto ha facilitado la creación de una base de trabajo en un contexto de aprendizaje, acelerando el desarrollo y ayudando a comprender la estructura general del backend.
-- **PHP 8+ con Laravel 11:** Como framework principal del backend, debido a que su arquitectura MVC<sup>1</sup> y su estructura bien definida facilitan el desarrollo asistido por inteligencia artificial.
+- **PHP 8.2+ con Laravel 11:** Como framework principal del backend, debido a que su arquitectura MVC<sup>1</sup> y su estructura bien definida facilitan el desarrollo asistido por inteligencia artificial.
 - **XAMPP:** Ya que permite simular un servidor completo con Apache, MySQL y PHP de forma sencilla. Esto facilita el desarrollo y las pruebas de la aplicación sin necesidad de un servidor en producción.
 
 #### Github: 
